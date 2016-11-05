@@ -1,13 +1,11 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 from maggies_webapp import models
 from django.contrib.auth import get_user
+
 # Create your views here.
 
-
 def login_page(request):
-    html ='login page html'
-    return HttpResponse(html)
+    return render(request, 'login.html')
 
 def main_page(request):
     return render(request,'main_page.html')
@@ -25,4 +23,3 @@ def schedule(request):
 
     models.Activity.objects.filter(centre="blah")
     return render(request,'schedule.html',context_dict)
-

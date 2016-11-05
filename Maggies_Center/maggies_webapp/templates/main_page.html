@@ -12,8 +12,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body>
-	
-	  <div class="navbar-fixed ">
+
+	  <div class="navbar-fixed">
 		<nav class="teal">
 		  <ul id="slide-out" class="side-nav">
 			<li><div class="userView">
@@ -30,7 +30,7 @@
 			<li><a class="subheader">Subheader</a></li>
 			<li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
 		  </ul>
-		  <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>		
+		  <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
 		  <div class="nav-wrapper container ">
 			<a href="#!" class="brand-logo">MVM wooooo</a>
 			<ul class="right hide-on-med-and-down">
@@ -40,8 +40,39 @@
 		  </div>
 		</nav>
 	  </div>
-        
+
+	  {% block content %}
+	  {% endblock %}
+
+
+		<footer class="page-footer teal darken-1">
+		  <div class="container">
+			<div class="row">
+			  <div class="col l6 s12">
+				<h5 class="white-text">Footer Content</h5>
+				<p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+			  </div>
+			  <div class="col l4 offset-l2 s12">
+				<h5 class="white-text">Links</h5>
+				<ul>
+				  <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+				  <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+				  <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
+				  <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+				</ul>
+			  </div>
+			</div>
+		  </div>
+		  <div class="footer-copyright">
+			<div class="container">
+			© 2014 Copyright Text
+			<a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+			</div>
+		  </div>
+		</footer>
+
 	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 	<script type="text/javascript" src={% static "maggies_webapp/materialize/js/materialize.min.js" %}></script>
+	<script type="text/javascript" src={% static "maggies_webapp/materialize/js/main.js" %}</script>
 </body>
 </html>
