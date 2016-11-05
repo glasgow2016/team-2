@@ -1,6 +1,8 @@
 from __future__ import unicode_literals
-
 from django.db import models
+from django.utils.timezone import now
+
+import json
 
 
 class StaffMember(models.Model):
@@ -36,8 +38,29 @@ class ActivityName(models.Model):
 class Activity(models.Model):
     name = models.ForeignKey(ActivityName, on_delete=models.CASCADE)
     instructed_by = models.ManyToManyField(StaffMember)
-    scheduled_times_array = []
+    scheduled_times_json = models.CharField(max_length=2000)
+    timestamp = models.DateTimeField()
 
+    def save(self, *args, **kwargs):
+        self.scheduled_times_json = json.dumps(self.scheduled_times_array)
+        if self.pk is None:
+            self.timestamp = now()
+        super(Activity, self).save(*args, **kwargs)
+
+    def get_scheduled_times(self, day_of_week):
+        """
+        Get scheduled times for a given day of week
+        :param day_of_week: 0-indexed day of week, Mon-Sun
+        :return: Arrays of 2-tuples containing starting and ending times
+        """
+        if day_of_week < 0 or day_of_week > 6:
+            raise ValueError("Day of week must be between 0 - Mon and 6 - Sun")
+        return self.scheduled_times_array[day_of_week]
+
+    def __init__(self, *args, **kwargs):
+        super(Activity, self).__init__(*args, **kwargs)
+        self.scheduled_times_array = json.loads(self.scheduled_times_json)
+        
 
 class Visit(models.Model):
     GENDER_CHOICES = (
