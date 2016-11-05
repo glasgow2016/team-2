@@ -10,7 +10,7 @@ def login_page(request):
     return render(request, 'maggies/login.html')
 
 def main_page(request):
-    return render(request,'maggies/main_page.html')
+    return render(request,'maggies/main.html')
 
 
 class AddUser(View, LoginRequiredMixin):
