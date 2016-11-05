@@ -36,6 +36,9 @@ class ActivityName(models.Model):
 class Activity(models.Model):
     name = models.ForeignKey(ActivityName, on_delete=models.CASCADE)
     instructed_by = models.ManyToManyField(StaffMember)
+    scheduled_times_array = []
+
+    def get_scheduled_times(self, ):
 
 
 class Visit(models.Model):
@@ -53,7 +56,7 @@ class Visit(models.Model):
         ("IN", "International"),
         ("OV", "Other visitor")
     )
-    CANCER_TYPE = (
+    CANCER_TYPE_CHOICES = (
         ("BR", "Brain / CNS"),
         ("GY", "Gynae"),
         ("HN", "Head / Neck"),
@@ -90,7 +93,7 @@ class Visit(models.Model):
     journey_stage = models.CharField(max_length=2, choices=JOURNAL_CHOICES)
     visit_site = models.ForeignKey(Centre, on_delete=models.CASCADE)
     nature_of_visit = models.CharField(max_length=2, choices=VISIT_NATURE_CHOICES)
-    cancer_site = models.CharField(max_length=2, choices=VISIT_NATURE_CHOICES)
+    cancer_site = models.CharField(max_length=2, choices=CANCER_TYPE_CHOICES)
     seen_by = models.ForeignKey(StaffMember, on_delete=models.SET_NULL, null=True)
     type = models.CharField(max_length=2, choices=VISIT_TYPE_CHOICES)
     activities = models.ManyToManyField(Activity)
