@@ -38,8 +38,6 @@ class Activity(models.Model):
     instructed_by = models.ManyToManyField(StaffMember)
     scheduled_times_array = []
 
-    def get_scheduled_times(self, ):
-
 
 class Visit(models.Model):
     GENDER_CHOICES = (
