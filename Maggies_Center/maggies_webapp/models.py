@@ -51,11 +51,25 @@ class Activity(models.Model):
         """
         Get scheduled times for a given day of week
         :param day_of_week: 0-indexed day of week, Mon-Sun
-        :return: Arrays of 2-tuples containing starting and ending times
+        :return: Array of 2-tuples containing starting and ending times for
+                 given day
         """
         if day_of_week < 0 or day_of_week > 6:
             raise ValueError("Day of week must be between 0 - Mon and 6 - Sun")
         return self.scheduled_times_array[day_of_week]
+
+    def set_scheduled_times(self, day_of_week, times):
+        """
+        Set scheduled times for a given day of week
+        :param day_of_week: 0-indexed day of week, Mon-Sun
+        :param times Array of 2-tuples containing starting and ending times for
+                     given day
+        :return: None
+        """
+        if day_of_week < 0 or day_of_week > 6:
+            raise ValueError("Day of week must be between 0 - Mon and 6 - Sun")
+        self.scheduled_times_array[day_of_week] = times
+        self.save()
 
     def __init__(self, *args, **kwargs):
         super(Activity, self).__init__(*args, **kwargs)
@@ -113,9 +127,11 @@ class Visit(models.Model):
     gender = models.CharField(max_length=2, choices=GENDER_CHOICES)
     journey_stage = models.CharField(max_length=2, choices=JOURNEY_CHOICES)
     visit_site = models.ForeignKey(Centre, on_delete=models.CASCADE)
-    nature_of_visit = models.CharField(max_length=2, choices=VISIT_NATURE_CHOICES)
+    nature_of_visit = models.CharField(max_length=2,
+                                       choices=VISIT_NATURE_CHOICES)
     cancer_site = models.CharField(max_length=2, choices=CANCER_TYPE_CHOICES)
-    seen_by = models.ForeignKey(StaffMember, on_delete=models.SET_NULL, null=True)
+    seen_by = models.ForeignKey(StaffMember, on_delete=models.SET_NULL,
+                                null=True)
     type = models.CharField(max_length=2, choices=VISIT_TYPE_CHOICES)
     activities = models.ManyToManyField(Activity)
 
