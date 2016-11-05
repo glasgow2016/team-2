@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.contrib.auth import get_user
 from .forms import BaseUserForm, NewStaffForm
 from maggies_webapp.models import Visit, Activity, StaffMember
 # Create your views here.
@@ -10,7 +10,7 @@ def login_page(request):
     return render(request, 'maggies/login.html')
 
 def main_page(request):
-    return render(request,'maggies/main_page.html')
+    return render(request,'maggies/main.html')
 
 
 class AddUser(View, LoginRequiredMixin):
