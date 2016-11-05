@@ -85,7 +85,10 @@ class Activity(models.Model):
 
     def __init__(self, *args, **kwargs):
         super(Activity, self).__init__(*args, **kwargs)
-        self.scheduled_times_array = json.loads(self.scheduled_times_json)
+        try:
+            self.scheduled_times_array = json.loads(self.scheduled_times_json)
+        except:
+            self.scheduled_times_array = [[] for x in range(7)]
 
     def __str__(self):
         return self.name
