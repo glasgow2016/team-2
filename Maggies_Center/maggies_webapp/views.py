@@ -27,7 +27,8 @@ def schedule(request):
     context_dict = {}
     current_user = get_user(request)
     if (current_user.id == None):
-        return HttpResponseNotFound('<p>Page not Found</p>')
+        # return HttpResponseNotFound('<p>Page not Found</p>')
+        return render(request, 'maggies/schedule.html', context_dict)
     current_user = StaffMember.objects.get(user_mapping = get_user(request))
     context_dict["schedule"] = {}
     for activity in Activity.objects.filter(centre=current_user.centre):

@@ -1,3 +1,31 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <script src={% static "js/schedule.js" %}></script>
 
-{{ ScheduleForm }}
+<div class="row">
+    <form class="col s12">
+        <div class="row">
+             <input type="date" class="daypicker">
+        </div>
+        <div class="row">
+            <div class="input-field col s3">
+                <input placeholder="Placeholder" id="first_name" type="text" class="validate">
+                <label for="first_name">Activity</label>
+            </div>
+            <div class="input-field col s3">
+                <input id="last_name" type="text" class="validate">
+                <label for="last_name">Start</label>
+            </div>
+            <div class="input-field col s3">
+                <input id="last_name" type="text" class="validate">
+                <label for="last_name">End</label>
+            </div>
+            <div class="input-field col s3">
+                <input id="last_name" type="text" class="validate">
+                <label for="last_name">Staff</label>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
