@@ -22,5 +22,6 @@ urlpatterns = [
     url(r'^visitors/', include("maggies_webapp.urls")),
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.main_page, name='index'),
-    url(r'^login/', views.login_page, name='login')
+    url(r'^login/', views.login_page, name='login'),
+    url(r'^export/', views.export, name='export')
 ]

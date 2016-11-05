@@ -1,6 +1,5 @@
 from django.shortcuts import render
-from maggies_webapp import models
-
+from maggies_webapp.models import Visit, Activity
 # Create your views here.
 
 def login_page(request):
@@ -12,5 +11,12 @@ def main_page(request):
 def schedule(request):
     context_dict = {}
     context_dict["schedule"] = {}
-    models.Activity.objects.filter()
+    Activity.objects.filter()
     return render(request,'schedule.html',context_dict)
+
+def export(request):
+    if (request.method) == 'GET':
+        print("Received export request")
+        print(request.GET.get('startdate'), request.GET.get('enddate'))
+        visits = Visit.objects.all()
+        print(visits)
