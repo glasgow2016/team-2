@@ -8,5 +8,4 @@ def login_page(request):
     return HttpResponse(html)
 
 def main_page(request):
-    html = 'main page html'
-    return HttpResponse(html)
+    return render(request,'main_page.html')
