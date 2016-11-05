@@ -19,5 +19,6 @@ from maggies_webapp import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', views.main_page, name='index')
+    url(r'^$', views.main_page, name='index'),
+    url(r'^login/', views.login_page, name='login')
 ]
