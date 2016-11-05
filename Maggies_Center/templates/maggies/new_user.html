@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 
+{% block title %}Add a new user{% endblock %}
+
 {% block content %}
 
 <form method="post">
-<div class="input-field">
     {% csrf_token %}
-{{ form_a.as_p }}
-{{ form_b.as_p }}
-</div>
-<input type="submit" value="Create">
+    {{ form_b.as_p }}
+    {{ form_a.as_p }}
+    <input type="submit" value="Create">
 </form>
 
 {% endblock %}

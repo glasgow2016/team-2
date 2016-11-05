@@ -1,6 +1,7 @@
 from django import forms
 from .models import StaffMember
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 
 
 class NewStaffForm(forms.ModelForm):
@@ -12,5 +13,14 @@ class NewStaffForm(forms.ModelForm):
 class BaseUserForm(forms.Form):
     user = forms.CharField(max_length=30)
     email = forms.EmailField(label="Email")
-    password = forms.CharField(label="Password", widget=forms.PasswordInput, max_length=80)
-    password_repeat = forms.CharField(label="Repeat password", widget=forms.PasswordInput, max_length=80)
+    password = forms.CharField(label="Password",
+                               widget=forms.PasswordInput,
+                               max_length=80)
+    password_repeat = forms.CharField(label="Repeat password",
+                                      widget=forms.PasswordInput, max_length=80)
+
+    def clean(self):
+        cleaned_data = super(BaseUserForm, self).clean()
+        if cleaned_data.get("password") != cleaned_data.get("password_repeat"):
+            raise ValidationError("Passwords do not match",
+                                  code="password_match")
