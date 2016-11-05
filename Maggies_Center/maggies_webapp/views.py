@@ -5,8 +5,10 @@ from django.contrib.auth import get_user
 from .forms import BaseUserForm, NewStaffForm
 from maggies_webapp.models import Visit, Activity, StaffMember
 from django.http import HttpResponseNotFound
-from django.contrib.auth.models import AnonymousUser
-# Create your views here.
+from django.contrib.auth.models import User
+
+from django.contrib import messages
+
 
 def main_page(request):
     return render(request,'maggies/main.html')
@@ -17,10 +19,27 @@ class AddUser(View, LoginRequiredMixin):
     def get(self, request):
         form_a = BaseUserForm()
         form_b = NewStaffForm()
-        return render(request, "maggies/new_user.html")
+        return render(request, "maggies/new_user.html", {"form_a": form_a,
+                                                         "form_b": form_b})
 
     def post(self, request):
-        pass
+        form_a = BaseUserForm(request.POST)
+        form_b = NewStaffForm(request.POST)
+        if form_a.is_valid():
+            if form_b.is_valid():
+                new_user = User.objects.create_user(
+                    username=form_a.cleaned_data["user"],
+                    password=form_a.cleaned_data["password"],
+                    email=form_a.cleaned_data["email"])
+                new_prof = form_b.save(commit=False)
+                new_prof.user_mapping = new_user
+                new_prof.save()
+            else:
+                messages.warning(request, "Invalid user information")
+        else:
+            messages.warning(request, "Invalid user information")
+        return render(request, "maggies/new_user.html", {"form_a": form_a,
+                                                         "form_b": form_b})
 
 
 def schedule(request):
