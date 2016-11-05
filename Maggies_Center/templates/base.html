@@ -6,15 +6,18 @@
         <!--Import Google Icon Font-->
         <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <!--Import materialize.css-->
-        <link type="text/css" rel="stylesheet" href={% static "css/materialize.min.css" %}/>
-
+        <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.min.css' %}"/>
+		<link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}"/>
+		
         <!--Let browser know website is optimized for mobile-->
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
     <body>
-
+		<!-- Navbar -->
           <div class="navbar-fixed">
-            <nav class="teal">
+            <nav class="white">
+			
+			  <!-- Slide-out (mobile) -->
               <ul id="slide-out" class="side-nav">
                 <li><div class="userView">
                   <div class="background">
@@ -31,8 +34,10 @@
                 <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
               </ul>
               <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
-              <div class="nav-wrapper container ">
-                <a href="#!" class="brand-logo">MVM wooooo</a>
+              
+			  <!-- Menu -->
+			  <div class="nav-wrapper container">
+                <a href="#!" class="brand-logo black-text"><img src="{% static 'img/logo.png'%}" alt="maggies visitor admin" /></a>
                 <ul class="right hide-on-med-and-down">
 				  {% if user.is_authenticated %}
 					<li><a href="/signout/">Sign out</a></li>
@@ -43,39 +48,40 @@
               </div>
             </nav>
           </div>
-
+		  <div class="container">
           {% block content %}
           {% endblock %}
+		  </div>
 
-
-            <footer class="page-footer teal darken-1">
+            <footer class="page-footer white black-text">
               <div class="container">
                 <div class="row">
                   <div class="col l6 s12">
-                    <h5 class="white-text">TODO: Remove footer (is it necessary??)</h5>
-                    <p class="grey-text text-lighten-4">Footers are overrated</p>
+                    <h5 class="grey-text text-darken-3">TODO: Remove footer (is it necessary??)</h5>
+                    <p class="grey-text text-darken-3">Footers are overrated</p>
                   </div>
                   <div class="col l4 offset-l2 s12">
                     <h5 class="white-text">Links</h5>
                     <ul>
-                      <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
-                      <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
-                      <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
-                      <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+                      <li><a class="" href="#!">Link 1</a></li>
+                      <li><a class="black-text text-lighten-3" href="#!">Link 2</a></li>
+                      <li><a class="black-text text-lighten-3" href="#!">Link 3</a></li>
+                      <li><a class="black-text" href="#!">Link 4</a></li>
                     </ul>
                   </div>
                 </div>
               </div>
-              <div class="footer-copyright">
+              <div class="footer-copyright black-text">
                 <div class="container">
                 © 2016 Team 2 C4G
-                <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+                <a class="black-text text-lighten-4 right" href="#!">More Links</a>
                 </div>
               </div>
             </footer>
 
         <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src={% static "js/schedule.js" %}></script>
         <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/main.js' %}"</script>
+        <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
     </body>
 </html>
