@@ -4,11 +4,11 @@
 {% block content %}
 
 <form method="post">
-<div class="input-field">
+<div>
     {% csrf_token %}
 {{ form.as_p }}
 </div>
-<input type="submit" value="Create">
+<input type="submit" value="Create" class="btn right waves-effect waves-light">
 </form>
 
 {% endblock %}
