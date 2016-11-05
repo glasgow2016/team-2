@@ -30,7 +30,7 @@ class AddUser(View, LoginRequiredMixin):
                 new_user = User.objects.create_user(
                     username=form_a.cleaned_data["user"],
                     password=form_a.cleaned_data["password"],
-                    email=form_b.cleaned_data["email"])
+                    email=form_a.cleaned_data["email"])
                 new_prof = form_b.save(commit=False)
                 new_prof.user_mapping = new_user
                 new_prof.save()
