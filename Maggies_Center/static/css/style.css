@@ -8,4 +8,19 @@
   main {
     flex: 1 0 auto;
   }
-      
+	
+	nav {
+		border-bottom: 5px solid rgb(183, 0, 54);
+	}
+	nav ul li a{
+		color: black;
+	}
+	
+	nav .brand-logo img{
+		margin: 22px 0 0 0;
+		max-height: 35px;
+	}
+	
+	footer div a {
+		color: black !important;
+	}
