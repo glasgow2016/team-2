@@ -21,6 +21,9 @@
 		max-height: 35px;
 	}
 	
+	.navbar-fixed {
+		margin-bottom: 20px;
+	}
 	footer div a {
 		color: black !important;
 	}
