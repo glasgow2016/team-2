@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'maggies_webapp'
+    'maggies_webapp',
+    'registration'
 ]
 
 MIDDLEWARE = [
