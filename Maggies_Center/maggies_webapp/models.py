@@ -26,15 +26,24 @@ class Language(models.Model):
     name = models.CharField(max_length=40)
     name_in_english = models.CharField(max_length=30)
 
+    def __str__(self):
+        return self.name_in_english
+
 
 class Centre(models.Model):
     name = models.CharField(max_length=100)
     language = models.ForeignKey(Language, on_delete=models.PROTECT)
 
+    def __str__(self):
+        return self.language
+
 
 class ActivityName(models.Model):
     lang = models.ForeignKey(Language, on_delete=models.CASCADE)
     translated_name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.translated_name
 
 
 class Activity(models.Model):
@@ -77,6 +86,9 @@ class Activity(models.Model):
     def __init__(self, *args, **kwargs):
         super(Activity, self).__init__(*args, **kwargs)
         self.scheduled_times_array = json.loads(self.scheduled_times_json)
+
+    def __str__(self):
+        return self.name
         
 
 class Visit(models.Model):
