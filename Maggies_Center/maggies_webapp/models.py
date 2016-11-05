@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 from django.db import models
 from django.utils.timezone import now
+from django.contrib.auth.models import User
 
 import json
 
@@ -15,6 +16,7 @@ class StaffMember(models.Model):
         ("SS", "Sessional Staff"),
     )
 
+    user_mapping = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=80)
     surname = models.CharField(max_length=120)
     staff_type = models.CharField(max_length=2, choices=STAFF_TYPE_CHOICES)
@@ -37,6 +39,7 @@ class ActivityName(models.Model):
 
 class Activity(models.Model):
     name = models.ForeignKey(ActivityName, on_delete=models.CASCADE)
+    centre = models.ForeignKey(Centre, on_delete=models.CASCADE)
     instructed_by = models.ManyToManyField(StaffMember)
     scheduled_times_json = models.CharField(max_length=2000)
     timestamp = models.DateTimeField()
