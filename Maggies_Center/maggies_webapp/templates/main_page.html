@@ -2,49 +2,18 @@
 <html lang="en">
 {% load static %}
 <head>
-    <meta charset="UTF-8">
-    <!-- Tether -->
-    <link rel="stylesheet" type="text/css" href={% static "maggies_webapp/tether/tether.min.css" %}>
-    <script src={% static "maggies_webapp/tether/tether.min.js" %}></script>
-
-    <!-- JQuery -->
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js"
-            integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
-            crossorigin="anonymous"></script>
-
-    <!-- Material Design fonts -->
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
-
-    <!-- Bootstrap -->
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-    <!--Bootstrap + Material Design -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/4.0.2/bootstrap-material-design.umd.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/4.0.2/bootstrap-material-design.min.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/4.0.2/bootstrap-material-design.iife.min.js"></script>
-
-
-
     <title>Title</title>
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href={% static "maggies_webapp/materialize/css/materialize.min.css" %}/>
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body>
-<div class="form-group label-static">
-    <label for="i2" class="control-label">label-static</label>
-    <input type="email" class="form-control" id="i2" placeholder="placeholder attribute">
-    <p class="help-block">This is a hint as a <code>p.help-block.hint</code></p>
-  </div>
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src={% static "maggies_webapp/materialize/js/materialize.min.js" %}></script>
 
-  <div class="form-group label-floating">
-    <label for="i5" class="control-label">label-floating</label>
-    <input type="email" class="form-control" id="i5">
-    <span class="help-block">This is a hint as a <code>span.help-block.hint</code></span>
-  </div>
-
-  <div class="form-group label-placeholder">
-    <label for="i5p" class="control-label">label-placeholder</label>
-    <input type="email" class="form-control" id="i5p">
-    <span class="help-block">This is a hint as a <code>span.help-block.hint</code></span>
-  </div>
 </body>
 </html>
