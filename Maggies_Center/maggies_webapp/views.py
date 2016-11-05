@@ -6,9 +6,6 @@ from .forms import BaseUserForm, NewStaffForm
 from maggies_webapp.models import Visit, Activity, StaffMember
 # Create your views here.
 
-def login_page(request):
-    return render(request, 'maggies/login.html')
-
 def main_page(request):
     return render(request,'maggies/main.html')
 
@@ -18,7 +15,7 @@ class AddUser(View, LoginRequiredMixin):
     def get(self, request):
         form_a = BaseUserForm()
         form_b = NewStaffForm()
-        return render("maggies/new_user.html")
+        return render(request, "maggies/new_user.html")
 
     def post(self, request):
         pass
@@ -38,8 +35,9 @@ def schedule(request):
     Activity.objects.filter(centre="blah")
     return render(request,'maggies/schedule.html',context_dict)
 
-def export(request):
-    if (request.method) == 'GET':
+class Export(View, LoginRequiredMixin):
+
+    def get(self, request):
         print("Received export request")
         print(request.GET.get('startdate'), request.GET.get('enddate'))
         visits = Visit.objects.all()
