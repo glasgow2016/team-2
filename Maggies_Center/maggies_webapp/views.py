@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user
-from .forms import BaseUserForm, NewStaffForm
+from .forms import BaseUserForm, NewStaffForm, VisitForm
 from maggies_webapp.models import Visit, Activity, StaffMember
 from django.http import HttpResponseNotFound
 from django.contrib.auth.models import User
@@ -58,6 +58,22 @@ def schedule(request):
                 context_dict["schedule"][day][activity.id].append(time)
     Activity.objects.filter(centre="blah")
     return render(request,'maggies/schedule.html',context_dict)
+
+
+class AddVisitor(View, LoginRequiredMixin):
+
+    def get(self, request):
+        form = VisitForm()
+        return render(request, "maggies/new_visitor.html", {"form": form})
+
+    def post(self, request):
+        form = VisitForm(request.POST)
+        if form.is_valid():
+            print("Valid form")
+        else:
+            messages.warning(request, "Invalid visitor information")
+        return render(request, "maggies/new_visitor.html", {"form": form})
+
 
 class Export(View, LoginRequiredMixin):
 
