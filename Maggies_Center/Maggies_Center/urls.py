@@ -16,8 +16,10 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from maggies_webapp import views
+from django.conf.urls import include, url
 
 urlpatterns = [
+    url(r'^visitors/', include("maggies_webapp.urls")),
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.main_page, name='index')
 ]
