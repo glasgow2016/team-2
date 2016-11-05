@@ -21,6 +21,9 @@ class StaffMember(models.Model):
     surname = models.CharField(max_length=120)
     staff_type = models.CharField(max_length=2, choices=STAFF_TYPE_CHOICES)
 
+    def __str__(self):
+        return self.name
+
 
 class Language(models.Model):
     name = models.CharField(max_length=40)
@@ -35,7 +38,7 @@ class Centre(models.Model):
     language = models.ForeignKey(Language, on_delete=models.PROTECT)
 
     def __str__(self):
-        return self.language
+        return self.language.name_in_english
 
 
 class ActivityName(models.Model):
@@ -91,7 +94,7 @@ class Activity(models.Model):
             self.scheduled_times_array = [[] for x in range(7)]
 
     def __str__(self):
-        return self.name
+        return str(self.name)
         
 
 class Visit(models.Model):
