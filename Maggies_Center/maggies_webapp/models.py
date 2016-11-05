@@ -69,7 +69,7 @@ class Visit(models.Model):
         ("UM", "Under 18 Male"),
         ("UF", "Under 18 Female")
     )
-    JOURNAL_CHOICES = (
+    JOURNEY_CHOICES = (
         ("PW", "PwC"),
         ("CA", "Carer"),
         ("PR", "Professional"),
@@ -111,7 +111,7 @@ class Visit(models.Model):
     )
 
     gender = models.CharField(max_length=2, choices=GENDER_CHOICES)
-    journey_stage = models.CharField(max_length=2, choices=JOURNAL_CHOICES)
+    journey_stage = models.CharField(max_length=2, choices=JOURNEY_CHOICES)
     visit_site = models.ForeignKey(Centre, on_delete=models.CASCADE)
     nature_of_visit = models.CharField(max_length=2, choices=VISIT_NATURE_CHOICES)
     cancer_site = models.CharField(max_length=2, choices=CANCER_TYPE_CHOICES)
