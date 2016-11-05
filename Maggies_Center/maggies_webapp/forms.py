@@ -1,5 +1,5 @@
 from django import forms
-from .models import StaffMember
+from .models import StaffMember, Visit
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
@@ -24,3 +24,9 @@ class BaseUserForm(forms.Form):
         if cleaned_data.get("password") != cleaned_data.get("password_repeat"):
             raise ValidationError("Passwords do not match",
                                   code="password_match")
+
+class VisitForm(forms.ModelForm):
+    class Meta:
+        model = Visit
+        fields = ("gender", "journey_stage", "visit_site", "nature_of_visit",
+                  "cancer_site", "seen_by", "type", "activities")
