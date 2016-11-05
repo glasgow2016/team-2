@@ -1,6 +1,6 @@
 from django import forms
-from .models import StaffMember
-from django.contrib.auth.models import User, Visit
+from .models import StaffMember, Visit
+from django.contrib.auth.models import User
 
 
 class NewStaffForm(forms.ModelForm):
@@ -18,3 +18,4 @@ class BaseUserForm(forms.Form):
 class VisitForm(forms.ModelForm):
     class Meta:
         model = Visit
+        exclude = ()
