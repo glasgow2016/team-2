@@ -49,12 +49,13 @@ def schedule(request):
     current_user = StaffMember.objects.get(user_mapping = get_user(request))
     context_dict["schedule"] = {}
     for activity in Activity.objects.filter(centre=current_user.centre):
-        for day in activity.scheduled_times_array:
-            context_dict["schedule"][day] = {}
-            context_dict["schedule"][day][activity.id] = []
-            for time in activity.scheduled_times_array[day]:
-                context_dict["schedule"][day][activity.id].append(time)
-    Activity.objects.filter(centre="blah")
+        for i in range(0,7,1):
+            print(activity.scheduled_times_array[i])
+            # context_dict["schedule"][day] = {}
+            # context_dict["schedule"][day][activity.id] = []
+            # for time in activity.scheduled_times_array[day]:
+            #     context_dict["schedule"][day][activity.id].append(time)
+    # Activity.objects.filter(centre="blah")
     return render(request,'maggies/schedule.html',context_dict)
 
 

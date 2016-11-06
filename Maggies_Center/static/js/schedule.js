@@ -14,6 +14,7 @@ $(document).ready(function () {
         $button.remove();
         row_count++;
     });
+    
 });
 
 function createRow() {
