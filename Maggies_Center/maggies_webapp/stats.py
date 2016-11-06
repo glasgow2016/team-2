@@ -1,8 +1,8 @@
-from maggies_webapp.models import *
+from maggies_webapp.models import Visit
 
 def get_visitor_stats():
     presets = {}
-    values = Visitor.objects.all().values_list("gender", "journey_stage", "visit_site", "nature_of_visit",
+    values = Visit.objects.all().values_list("gender", "journey_stage", "visit_site", "nature_of_visit",
                   "cancer_site", "seen_by", "type", "activities")
     #for visitor in values:
     b = map(lambda x: x[0], values)
