@@ -29,8 +29,8 @@ class Util(object):
     @staticmethod
     def get_user_lang(user):
         userprofile = StaffMember.objects.get(user_mapping=user)
-        return userprofile.centre[0].language
+        return userprofile.centre.all()[0].language
 
     @staticmethod
     def get_activity_name_in_user_lang(user, activity):
-        return ActivityName.objects.all().filter(activity=activity, lang=Util.get_user_lang(user)).translated_name
+        return ActivityName.objects.all().get(activity=activity, lang=Util.get_user_lang(user)).translated_name
