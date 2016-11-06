@@ -2,7 +2,7 @@
 {% block title%}Maggies Visitors' Hub{% endblock %}
 {% block header %}
 	{% if user.is_authenticated %}
-		Hello, {{ staffname }}.
+		Welcome back, {{ staffmember.name }}!
 	{% else %}
 		Wellcome to MVH. Please sign in.
 	{% endif %}
