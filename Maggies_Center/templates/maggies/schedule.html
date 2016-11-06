@@ -43,21 +43,29 @@
             </div>
             <div class="row" id="last-row">
                 <div class="input-field col s3">
-                    <select name="activity" class="browser-default" title="activity">
+                    <label for="activity">Activity</label>
+                        <select name="activity" class="browser-default" title="activity" id="activity">
 
-                        {% for a in activities %}
-                            <option value={{ a }}>{{ a }}</option>
-                        {% endfor %}
-                    </select>
+                            {% for a in activities %}
+                                <option value={{ a }}>{{ a }}</option>
+                            {% endfor %}
+                        </select>
+
                 </div>
                 <div class="input-field col s2">
-                    <input type="time" name="start" title="start">
+                    <label for="start_time">Start Time</label>
+                        <input type="time" name="start" title="start" id="start_time">
+
                 </div>
                 <div class="input-field col s2">
-                    <input type="time" name="end" title="end">
+                    <label for="end_time">End Time</label>
+                        <input type="time" name="end" title="end" id="end_time">
+
                 </div>
                 <div class="input-field col s3">
-                    <input name="staff" title="staff">
+                    <label for="staff_name">Staff Name</label>
+                        <input name="staff" title="staff" id="staff_name">
+
                 </div>
 
                 <a id="add-row" class="btn"><i class="material-icons left">add</i>ADD</a>
