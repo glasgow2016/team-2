@@ -12,15 +12,23 @@
 
 
 <div class="row">
-<a class="card btn col s12 m3 red darken-4 waves-light waves-effect" style="height: 190px; font-size: 190px; padding-top: 75px;" id="" onclick="addVisitorCard()">+</a>
+<div class="col s12 m4">
+	  <div class="card horizontal red darken-4 waves-light waves-effect">
+          <div class="card-image">
+		  <img src="http://lorempixel.com/100/190/nature/6">
+          </div>
+          <div class="card-stacked">
 
+		</div>
+	  </div>
+</div>
 
 {% if visitors %}
 	{% for visitor in visitors %}
-	<div class="col s12 m3">
+	<div class="col s12 m4">
 	  <div class="card horizontal">
 		<div class="card-image">
-		  <img src="http://lorempixel.com/100/190/nature/6">
+		  <img style="margin: auto;" src="http://lorempixel.com/100/190/nature/6">
 		</div>
 		<div class="card-stacked">
 		  <div class="card-content">
