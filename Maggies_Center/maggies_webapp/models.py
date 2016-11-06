@@ -24,6 +24,7 @@ class Centre(models.Model):
 
 class StaffMember(models.Model):
     STAFF_TYPE_CHOICES = (
+        ("AD", "Administrator"),
         ("CH", "Centre Head"),
         ("CS", "CSS"),
         ("PS", "Psychologist"),
@@ -45,12 +46,9 @@ class Activity(models.Model):
     centre = models.ForeignKey(Centre, on_delete=models.CASCADE)
     instructed_by = models.ManyToManyField(StaffMember)
     scheduled_times_json = models.CharField(max_length=2000)
-    timestamp = models.DateTimeField()
 
     def save(self, *args, **kwargs):
         self.scheduled_times_json = json.dumps(self.scheduled_times_array)
-        if self.pk is None:
-            self.timestamp = now()
         super(Activity, self).save(*args, **kwargs)
 
     def get_scheduled_times(self, day_of_week):
@@ -149,6 +147,7 @@ class Visit(models.Model):
         ("RE", "Returning")
     )
 
+    timestamp = models.DateTimeField()
     gender = models.CharField(max_length=2, choices=GENDER_CHOICES)
     journey_stage = models.CharField(max_length=2, choices=JOURNEY_CHOICES)
     visit_site = models.ForeignKey(Centre, on_delete=models.CASCADE)
@@ -159,6 +158,11 @@ class Visit(models.Model):
                                 null=True)
     type = models.CharField(max_length=2, choices=VISIT_TYPE_CHOICES)
     activities = models.ManyToManyField(Activity, blank=True)
+
+    def save(self, *args, **kwargs):
+        if self.pk is None:
+            self.timestamp = now()
+        super(Visit, self).save(*args, **kwargs)
 
 
 class TempVisitNameMapping(models.Model):

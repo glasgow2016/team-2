@@ -10,7 +10,7 @@
   }
 	
 	nav {
-		border-bottom: 5px solid rgb(183, 0, 54);
+		border-bottom: 5px solid #B71C1C;
 	}
 	nav ul li a{
 		color: black;
@@ -26,4 +26,19 @@
 	}
 	footer div a {
 		color: black !important;
+	}
+	
+	.big-card {
+		height: 190px;
+	}
+	.big-card > div {
+		font-size: 180px;
+		font-weight: 900;
+		position: relative;
+		text-align: center;
+		margin: auto;
+		padding: auto;
+	}
+	.card .card-action {
+		padding: 15px;
 	}

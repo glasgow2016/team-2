@@ -5,20 +5,21 @@ from django.contrib.auth import get_user
 from .forms import BaseUserForm, NewStaffForm, VisitForm, TempVisitNameMappingForm
 from maggies_webapp.models import Visit, Activity, StaffMember, TempVisitNameMapping, Centre
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from .stats import get_visitor_stats
 from django.contrib import messages
 from .util import Util
+
 
 @login_required
 def main_page(request):
     if request.user is None:
         return redirect('/accounts/login/')
     staff_member = StaffMember.objects.all().get(user_mapping=request.user)
-    centers = Centre.objects.filter(staffmember=staff_member)
     values = []
     for visitor in TempVisitNameMapping.objects.all():
-        if (visitor.related_visit.visit_site in centers):
+        if Util.check_user_can_access(staff_member, visitor.related_visit):
             values += [Util.generate_dict_from_instance(visitor)]
     return render(request,'maggies/main.html', {'visitors': values})
 
@@ -98,13 +99,35 @@ class DeleteSchedule(View,LoginRequiredMixin):
 class AddVisitor(LoginRequiredMixin, View):
 
     def get(self, request):
+        this_id = request.GET.get("id", None)
         stats = get_visitor_stats()
-        form_a = TempVisitNameMappingForm()
-        form_b = VisitForm(initial=stats,)
+        if this_id is not None:
+            this_visit = get_object_or_404(Visit, pk=this_id)
+            this_name = ""
+            if not Util.check_user_obj_can_access(request.user, this_visit):
+                return redirect("/")
+            try:
+                this_visit_meta = TempVisitNameMapping.objects.get(
+                    related_visit__pk=this_id)
+                this_name = this_visit_meta.visitor_name
+            except:
+                pass
+            form_a = TempVisitNameMappingForm(initial={"visitor_name": this_name})
+            form_b = VisitForm(instance=this_visit)
+        else:
+            form_a = TempVisitNameMappingForm()
+            form_b = VisitForm(initial=stats, )
+
         return render(request, "maggies/new_visitor.html", {"form_a": form_a,
                                                             "form_b": form_b})
 
     def post(self, request):
+        this_id = request.GET.get("id", None)
+        old_visit = None
+        if this_id is not None:
+            old_visit = Visit.objects.get(pk=this_id)
+            if not Util.check_user_obj_can_access(request.user, old_visit):
+                return redirect("/")
         form_a = TempVisitNameMappingForm(request.POST)
         form_b = VisitForm(request.POST)
         if form_a.is_valid():
@@ -114,6 +137,9 @@ class AddVisitor(LoginRequiredMixin, View):
                 new_mapping.related_visit = new_visitor
                 new_visitor.save()
                 new_mapping.save()
+                if this_id is not None:
+                    new_visitor.timestamp = old_visit.timestamp
+                    old_visit.delete()
                 return redirect("/")
             else:
                 messages.warning(request, "Invalid user information")

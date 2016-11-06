@@ -34,4 +34,4 @@ class VisitForm(forms.ModelForm):
 class TempVisitNameMappingForm(forms.ModelForm):
     class Meta:
         model = TempVisitNameMapping
-        exclude = ("related_visit",)
+        fields = ("visitor_name",)
