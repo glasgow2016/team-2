@@ -19,7 +19,7 @@
     <select>
       <option value="" disabled selected>Centre</option>
         {% for c in centres %}
-            <option value={{ c }}>{{ c }}</option> 
+            <option value="{{ c.pk }}">{{ c }}</option>
         {% endfor %}
     </select>
           </span>

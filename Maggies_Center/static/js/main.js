@@ -1,7 +1,7 @@
 $(document).ready(function() {
     $('select').material_select();
 	$(".button-collapse").sideNav();
-	Materialize.updateTextFields();
+	Materialize.updateTextFields();#
 });
 function addVisitorCard() {
 	alert("woo");
