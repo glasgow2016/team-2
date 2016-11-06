@@ -41,9 +41,15 @@
                 </div>
 
             </div>
+        <div class="row">
+            <div class="input-field col s3">Activity</div>
+            <div class="input-field col s2">Start Time</div>
+            <div class="input-field col s2">End Time</div>
+            <div class="input-field col s3">Staff Member</div>
+        </div>
             <div class="row" id="last-row">
                 <div class="input-field col s3">
-                    <label for="activity">Activity</label>
+
                         <select name="activity" class="browser-default" title="activity" id="activity">
 
                             {% for a in activities %}
@@ -53,17 +59,17 @@
 
                 </div>
                 <div class="input-field col s2">
-                    <label for="start_time">Start Time</label>
+
                         <input type="time" name="start" title="start" id="start_time">
 
                 </div>
                 <div class="input-field col s2">
-                    <label for="end_time">End Time</label>
+
                         <input type="time" name="end" title="end" id="end_time">
 
                 </div>
                 <div class="input-field col s3">
-                    <label for="staff_name">Staff Name</label>
+
                         <input name="staff" title="staff" id="staff_name">
 
                 </div>
