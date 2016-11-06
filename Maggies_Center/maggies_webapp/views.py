@@ -11,6 +11,7 @@ from .stats import get_visitor_stats
 from django.contrib import messages
 from .util import Util
 import datetime
+import csv
 
 
 @login_required
@@ -175,8 +176,11 @@ class Export(LoginRequiredMixin, View):
     def post(self, request):
         form = ExportForm(request.POST)
         if form.is_valid():
-            print(form.center)
-            print(form.startdate)
+            startdate = form.cleaned_data["startdate"]
+            enddate = form.cleaned_data["enddate"]
+            center = form.cleaned_data["center"]
+            visitors = Visit.objects.all().filter(timestamp__gte=startdate, timestamp__lte=enddate, visit_site=center)
+            print(visitors)
         else:
             print("Export failed to retrieve input")
         return render(request, "maggies/export.html", {"form": form})

@@ -2,6 +2,7 @@ from django import forms
 from .models import StaffMember, Visit, TempVisitNameMapping, Centre
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from django.forms.extras.widgets import SelectDateWidget
 
 
 class NewStaffForm(forms.ModelForm):
@@ -38,8 +39,8 @@ class TempVisitNameMappingForm(forms.ModelForm):
 
 
 class ExportForm(forms.Form):
-    startdate = forms.DateField(widget=forms.DateInput(attrs={'class':'datepicker'}))
-    enddate = forms.DateField(widget=forms.DateInput(attrs={'class':'datepicker'}))
+    startdate = forms.DateField(widget=SelectDateWidget)
+    enddate = forms.DateField(widget=SelectDateWidget)
     center = forms.ModelChoiceField(queryset=Centre.objects)
 
 
