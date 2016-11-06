@@ -32,27 +32,27 @@
   </div>
 
 {% if visitors %}
-{% for visitor in visitors %}
-<div class="col s12 m5">
-  <div class="card horizontal">
-    <div class="card-image">
-      <img src="http://lorempixel.com/100/190/nature/6">
-    </div>
-    <div class="card-stacked">
-      <div class="card-content">
-        <p>Visitor</p>
-        {{ visitor.name }}
-        {{ visitor.gender }}
-        {{ visitor.cancer_type }}
-      </div>
-      <div class="card-action">
-        <a href="/add-visitor/">View visitor</a>
-      </div>
-    </div>
-  </div>
-</div>
-{% endfor %}
+	{% for visitor in visitors %}
+	<div class="col s12 m5">
+	  <div class="card horizontal">
+		<div class="card-image">
+		  <img src="http://lorempixel.com/100/190/nature/6">
+		</div>
+		<div class="card-stacked">
+		  <div class="card-content">
+			<p>Visitor</p>
+			{{ visitor.name }}
+			{{ visitor.gender }}
+			{{ visitor.cancer_type }}
+		  </div>
+		  <div class="card-action">
+			<a href="/add-visitor/">View visitor</a>
+		  </div>
+		</div>
+	  </div>
+	</div>
+	{% endfor %}
 {% endif %}
-
+</div>
 
 {% endblock %}
