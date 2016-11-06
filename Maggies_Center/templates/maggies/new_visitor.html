@@ -1,8 +1,18 @@
 {% extends "base.html" %}
 {% load static %}
 {% block title %}New Visitor{% endblock %}
+{% block head_block %}
+  <script src="{% static 'js/jquery-ui.min.js' %}"></script>
+  <script src="{% static 'js/name.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'css/jquery-ui.structure.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/jquery-ui.min.css' %}">
+{% endblock %}
 {% block header%}New Visitor{% endblock %}
 {% block content %}
+<script>
+  var form_id = "{{ form_a.visitor_name.id_for_label }}";
+  var select_id = "{{ form_b.visit_site.id_for_label }}";
+</script>
 
 <!-- <div id='visitor-modal' class='modal'> -->
   <div class="modal-content">
