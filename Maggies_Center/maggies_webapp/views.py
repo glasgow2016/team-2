@@ -5,6 +5,7 @@ from django.contrib.auth import get_user
 from .forms import BaseUserForm, NewStaffForm, VisitForm, TempVisitNameMappingForm
 from maggies_webapp.models import Visit, Activity, StaffMember
 from django.http import HttpResponseNotFound
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
 from django.contrib import messages
@@ -42,12 +43,9 @@ class AddUser(View, LoginRequiredMixin):
                                                          "form_b": form_b})
 
 
+@login_required
 def schedule(request):
     context_dict = {}
-    current_user = get_user(request)
-    if (current_user.id == None):
-        # return HttpResponseNotFound('<p>Page not Found</p>')
-        return render(request, 'maggies/schedule.html', context_dict)
     current_user = StaffMember.objects.get(user_mapping = get_user(request))
     context_dict["schedule"] = {}
     for activity in Activity.objects.filter(centre=current_user.centre):
