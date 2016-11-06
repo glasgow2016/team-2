@@ -1,5 +1,5 @@
 from django import forms
-from .models import StaffMember, Visit, TempVisitNameMapping
+from .models import StaffMember, Visit, TempVisitNameMapping, Centre
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
