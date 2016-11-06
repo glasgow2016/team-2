@@ -8,14 +8,16 @@
         <form class="col s12" method="post">
             {% csrf_token %}
             <div class="row">
-
-                <button class="btn waves-effect waves-light" type="submit" value="Submit">Save
-                    <i class="material-icons right">save</i>
-                </button>
+                <div class="input-field col s3">
+                    <label>Centre
+                        <select name="centre" title="centre">
+                            <option value="a">A</option>
+                        </select>
+                    </label>
+                </div>
             </div>
-
             <div class="row">
-                <div class="col s6"><label>Day</label>
+                <div class="col s6"><label>Day
                     <select name="day" title="day">
                         <option value="0">Monday</option>
                         <option value="1">Tuesday</option>
@@ -24,8 +26,15 @@
                         <option value="4">Friday</option>
                         <option value="5">Saturday</option>
                         <option value="6">Sunday</option>
-                    </select></div>
 
+                    </select>
+                </label>
+                </div>
+                <div class="col s6">
+                    <button class="btn waves-effect waves-light" type="submit" value="Submit">Save
+                        <i class="material-icons right">save</i>
+                    </button>
+                </div>
             </div>
             <div class="row" id="last-row">
                 <div class="input-field col s3">
@@ -40,7 +49,7 @@
                     <input type="time" name="end" title="end">
                 </div>
                 <div class="input-field col s3">
-                    <input name="staff "title="staff">
+                    <input name="staff" title="staff">
                 </div>
 
                 <a id="add-row" class="btn"><i class="material-icons left">add</i>ADD</a>
