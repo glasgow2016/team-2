@@ -9,7 +9,8 @@ class Util(object):
                 'gender': visitor.related_visit.get_gender_display(),
                 'cancer_type': visitor.related_visit.get_cancer_site_display(),
                 'id': visitor.pk,
-                'in_building': visitor.is_in_Building
+                'in_building': visitor.is_in_Building,
+                'seen_by': visitor.related_visit.seen_by.name
          }
 
     @staticmethod
