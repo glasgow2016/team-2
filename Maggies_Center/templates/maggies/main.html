@@ -19,7 +19,7 @@
 			  View<br/>
                   <label class="white-text">
                       Everyone
-                      <input type="checkbox">
+                      <input id="filter_switch" type="checkbox">
                       <span class="lever"></span>
                       At Centre
                   </label>
@@ -50,7 +50,7 @@
 
 {% if visitors %}
 	{% for visitor in visitors %}
-	<div class="col s12 m6 l4">
+	<div class="col s12 m6 l4" data-in-bld="{{ visitor.in_building }}">
 	  <div class="card horizontal">
 		<div class="card-image">
 		  {% if visitor.gender == 'Male' %}

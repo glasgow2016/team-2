@@ -29,6 +29,7 @@ def main_page(request):
     values = []
     for visitor in all_objects:
         if Util.check_user_can_access(staff_member, visitor.related_visit):
+            data = Util.generate_dict_from_instance(visitor)
             values += [Util.generate_dict_from_instance(visitor)]
 
     context_dict["visitors"] = values
