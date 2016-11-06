@@ -8,18 +8,16 @@
         <form class="col s12" method="post">
             {% csrf_token %}
             <div class="row">
-                <div class="input-field col s3">
+                <div class="col s6">
                     <label>Centre
                         <select name="centre" title="centre">
-                            <option value="a">A</option>
+                            {% for c in centres %}
+                                <option value={{ c }}>{{ c }}</option>
+                            {% endfor %}
                         </select>
                     </label>
                 </div>
-                <div class="col s6">
-                    <button class="btn waves-effect waves-light" type="submit" value="Submit">Save
-                        <i class="material-icons right">save</i>
-                    </button>
-                </div>
+
             </div>
 
             <div class="row">
@@ -35,6 +33,11 @@
                             <option value="6">Sunday</option>
                         </select>
                     </label>
+                </div>
+                <div class="col s6">
+                    <button class="btn waves-effect waves-light" type="submit" value="Submit">Save
+                        <i class="material-icons right">save</i>
+                    </button>
                 </div>
 
             </div>
