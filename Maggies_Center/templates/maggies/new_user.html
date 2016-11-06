@@ -3,12 +3,13 @@
 {% block title %}Add a new member of staff{% endblock %}
 {% block header %}New Staff Member{% endblock %}
 {% block content %}
-
-<form method="post">
-    {% csrf_token %}
-    {{ form_b.as_p }}
-    {{ form_a.as_p }}
-    <input type="submit" value="Create Staff Member" class="btn waves-effect waves-light right">
-</form>
+<div class="card">
+	<form method="post" id="cool-form">
+		{% csrf_token %}
+		{{ form_b.as_p }}
+		{{ form_a.as_p }}
+		<input type="submit" value="Create Staff Member" class="btn waves-effect waves-light right">
+	</form>
+</div>
 
 {% endblock %}

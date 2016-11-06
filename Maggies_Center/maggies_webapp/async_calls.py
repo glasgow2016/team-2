@@ -25,6 +25,7 @@ def get_suggestion(request, partial, centre_id):
 
 @login_required
 def visitor_left(request, person_id):
+    print("Visitor with mapping id" + person_id + " left...")
     visitor_status = TempVisitNameMapping.objects.filter(pk=person_id)
     visitor_status.is_in_Building = False
     visitor_status.save()
