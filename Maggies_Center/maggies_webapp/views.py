@@ -10,6 +10,7 @@ from django.contrib.auth.models import User
 from .stats import get_visitor_stats
 from django.contrib import messages
 from .util import Util
+import datetime
 
 
 @login_required
@@ -17,6 +18,13 @@ def main_page(request):
     if request.user is None:
         return redirect('/accounts/login/')
     staff_member = StaffMember.objects.all().get(user_mapping=request.user)
+    activities = Activity.objects.all()
+    context_dict = {}
+    day = datetime.date.today().weekday()
+    for a in activities:
+        for t in a.get_scheduled_times(day):
+            pass
+
     values = []
     for visitor in TempVisitNameMapping.objects.all():
         if Util.check_user_can_access(staff_member, visitor.related_visit):
