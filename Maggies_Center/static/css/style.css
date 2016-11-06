@@ -28,6 +28,17 @@
 		color: black !important;
 	}
 	
-	big-card {
+	.big-card {
 		height: 190px;
+	}
+	.big-card > div {
+		font-size: 180px;
+		font-weight: 900;
+		position: relative;
+		text-align: center;
+		margin: auto;
+		padding: auto;
+	}
+	.card .card-action {
+		padding: 15px;
 	}
