@@ -105,6 +105,15 @@ class DeleteSchedule(View,LoginRequiredMixin):
     def post(self,request):
         return redirect('/delactivity/')
 
+class ShowSchedule(View,LoginRequiredMixin):
+    def get(self,request,slug):
+        context_dixt = {}
+        activities = Activity.objects.all().filter(centre=Centre.objects.get(name=slug))
+        activity_list = []
+        for a in activities.all():
+            activity_list.append(Util.get_activity_name_in_user_lang(get_user(request),a))
+        print(activity_list)
+
 class AddVisitor(LoginRequiredMixin, View):
 
     def get(self, request):

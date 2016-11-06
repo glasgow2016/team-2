@@ -10,20 +10,18 @@
 {% block content%}
 
     <div class="row">
-        <div class="col s12 m12">
-            <div class="card-panel teal">
+    <div class="col s12 m12">
+        <div class="card-panel teal">
           <span class="white-text">
-{#              TODO#}
-              <div class="input-field">
-    <select>
-      <option value="" disabled selected>Centre</option>
-        {% for c in centres %}
-            <option value={{ c }}>{{ c }}</option> 
-        {% endfor %}
-    </select>
+              <a class='dropdown-button btn' href='#' data-activates='dropdown1'>Drop Me!</a>
+              <ul id='dropdown1' class='dropdown-content'>
+                  {% for c in centres %}
+                      <li><a href="\show\{{ c }}"></a>{{ c }}</li>
+                  {% endfor %}
+              </ul>
           </span>
-            </div>
         </div>
+    </div>
     </div>
 
 <div class="row">
