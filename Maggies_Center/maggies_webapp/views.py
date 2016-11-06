@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user
-from .forms import BaseUserForm, NewStaffForm, VisitForm
+from .forms import BaseUserForm, NewStaffForm, VisitForm, TempVisitNameMappingForm
 from maggies_webapp.models import Visit, Activity, StaffMember
 from django.http import HttpResponseNotFound
 from django.contrib.auth.models import User
@@ -63,16 +63,25 @@ def schedule(request):
 class AddVisitor(View, LoginRequiredMixin):
 
     def get(self, request):
-        form = VisitForm()
-        return render(request, "maggies/new_visitor.html", {"form": form})
+        form_a = TempVisitNameMappingForm()
+        form_b = VisitForm()
+        return render(request, "maggies/new_visitor.html", {"form_a": form_a, "form_b": form_b})
 
     def post(self, request):
-        form = VisitForm(request.POST)
-        if form.is_valid():
-            print("Valid form")
+        form_a = TempVisitNameMappingForm(request.POST)
+        form_b = VisitForm(request.POST)
+        if form_a.is_valid():
+            if form_b.is_valid():
+                new_mapping = form_a.save(commit=False)
+                new_visitor = form_b.save()
+                new_mapping.related_visit = new_visitor
+                new_visitor.save()
+                new_mapping.save()
+            else:
+                messages.warning(request, "Invalid user information")
         else:
             messages.warning(request, "Invalid visitor information")
-        return render(request, "maggies/new_visitor.html", {"form": form})
+        return render(request, "maggies/new_visitor.html", {"form_a": form_a, "form_b": form_b})
 
 
 class Export(View, LoginRequiredMixin):
