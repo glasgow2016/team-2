@@ -5,7 +5,7 @@
     <form id="login" method="post" action="{% url 'auth_login' %}" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-            <input type="submit" name="submit" value="Login" class="btn btn-primary">
+            <input type="submit" name="submit" value="Login" class="btn right waves-effect waves-light">
             <input type="hidden" name="next" value="{{ next }}" />
     </form>
 {% endblock %}
