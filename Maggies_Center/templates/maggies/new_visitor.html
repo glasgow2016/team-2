@@ -3,16 +3,19 @@
 {% block title %}New Visitor{% endblock %}
 {% block content %}
 
-<!-- Insert modal dialog here -->
-
-<form method="post">
-<div>
-    {% csrf_token %}
-{{ form_a.as_p }}
-{{ form_b.as_p }}
-
-</div>
-<input type="submit" value="Create" class="btn right waves-effect waves-light">
-</form>
+<!-- <div id='visitor-modal' class='modal'> -->
+  <div class="modal-content">
+    <form method="post">
+      <div>
+        {% csrf_token %}
+        {{ form_a.as_p }}
+        {{ form_b.as_p }}
+      </div>
+      <div class="modal-footer">
+        <input type="submit" value="Update" class="btn right waves-effect waves-light">
+      </div>
+    </form>
+  </div>
+<!-- </div> -->
 
 {% endblock %}
