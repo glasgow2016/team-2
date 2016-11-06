@@ -15,8 +15,7 @@
 </script>
 
 <!-- <div id='visitor-modal' class='modal'> -->
-  <div class="modal-content">
-    
+
 		<div id="suggestions">
 			<strong>Maybe you were looking for...</strong>
 			<div id="suggestions_in">
@@ -25,9 +24,9 @@
 
 		  <div class="card form-card">
 		  
-			{% csrf_token %}
-			<!-- form_a -->
 		<form method="post" id="cool-form">
+            {% csrf_token %}
+
 			<p>
 				{{ form_a.centre.label_tag }}
 				{{ form_a.centre}}
@@ -52,16 +51,9 @@
 				{{ field.errors }}
 			</p>
 			{% endfor %}
+            <input type="submit" value="Update" class="btn right waves-effect waves-light">
+        </form>
 	  </div>
-	  </div>
-
-
-		<input type="submit" value="Update" class="btn right waves-effect waves-light">
-
-
-   </form>
-
-  </div>
-<!-- </div> -->
+    <!-- </div> -->
 
 {% endblock %}
