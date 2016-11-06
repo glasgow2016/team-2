@@ -53,7 +53,7 @@
                         <select name="activity" class="browser-default" title="activity" id="activity">
 
                             {% for a in activities %}
-                                <option value={{ a }}>{{ a }}</option>
+                                <option value="{{ a.id }}">{{ a.name }}</option>
                             {% endfor %}
                         </select>
 

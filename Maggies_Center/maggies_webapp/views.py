@@ -3,7 +3,7 @@ from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user
 from .forms import BaseUserForm, NewStaffForm, VisitForm, TempVisitNameMappingForm, ExportForm
-from maggies_webapp.models import Visit, Activity, StaffMember, TempVisitNameMapping, Centre
+from maggies_webapp.models import Visit, Activity, StaffMember, TempVisitNameMapping, Centre, ActivityName
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
@@ -74,7 +74,8 @@ class Schedule(LoginRequiredMixin, View):
         context_dict = {}
         current_user = StaffMember.objects.get(user_mapping = get_user(request))
         context_dict["centres"] = current_user.centre.all()
-        context_dict["activities"] = ['Where Now?','Creative Writing','Yoga','Meditation']
+        context_dict["activities"] = [{"name": Util.get_activity_name_in_user_lang(request.user, x),
+                                       "id": x.pk} for x in Activity.objects.all()]
         return render(request,'maggies/schedule.html',context_dict)
 
     def post(self, request):
@@ -89,11 +90,9 @@ class Schedule(LoginRequiredMixin, View):
             activity_dict[activities[i]]["staff"].append(data.getlist("staff")[i])
 
         for key in activity_dict:
-            act = Activity()
+            act = get_object_or_404(Activity, pk=data.get("activity"))
             act.centre = Centre.objects.get(name=data.get("centre"))
             act.set_scheduled_times(int(data.get("day")), activity_dict[key]["times"])
-            print (data.get("day"))
-            print (act.centre)
             act.save()
             for staff_member in activity_dict[key]["staff"]:
                 act.instructed_by.add(StaffMember.objects.get(name=staff_member))

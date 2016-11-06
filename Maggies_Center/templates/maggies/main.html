@@ -14,10 +14,9 @@
     <div class="col s12 m12">
         <div class="card-panel teal">
           <span class="white-text">
-#
               <div class="input-field">
-    			<select>
-				  <option value="" id="centre_select" disabled selected>Centre</option>
+    			<select id="centre_select">
+				  <option value="" disabled selected>Centre</option>
 					{% for c in centres %}
 						<option value="{{ c.pk }}">{{ c }}</option>
 					{% endfor %}

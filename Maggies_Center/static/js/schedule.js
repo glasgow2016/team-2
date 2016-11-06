@@ -15,9 +15,5 @@ $(document).ready(function () {
         row_count++;
     });
 
-    $('#centre_select').change(function(){
-        alert("yep");
-    });
-
 });
 
