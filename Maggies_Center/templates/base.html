@@ -45,7 +45,8 @@
                   <a href="#!email"><span class="white-text email">{{ user.staff_type }}</span></a>
                 </div></li>
 				  {% if user.is_authenticated %}
-					<li><a href="{% url 'schedule'%}">Schedule</a></li>
+					<li><a href="{% url 'schedule'%}">Schedule activities</a></li>
+                    <li><a href="{% url 'show' slug=3 %}">What's on today</a></li>
 					<li><a href="{% url 'export'%}">Export</a></li>
 					<li><a href="{% url 'auth_logout' %}">Sign out</a></li>
 				  {% else %}
@@ -59,7 +60,8 @@
                 <a href="/" class="brand-logo black-text"><img src="{% static 'img/logo.png'%}" alt="maggies visitor admin" /></a>
                 <ul class="right hide-on-med-and-down">
 				  {% if user.is_authenticated %}
-					<li><a href="{% url 'schedule'%}">New Activity</a></li>
+					<li><a href="{% url 'schedule'%}">Schedule activities</a></li>
+                    <li><a href="{% url 'show' slug=3 %}">What's on today</a></li>
 					<li><a href="{% url 'export'%}">Export</a></li>
 					<li><a href="{% url 'auth_logout' %}">Sign out</a></li>
 				  {% else %}

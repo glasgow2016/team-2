@@ -17,7 +17,6 @@ import csv
 
 @login_required
 def main_page(request):
-    staff_member = StaffMember.objects.get(user_mapping=request.user)
     centre = request.GET.get("centre", None)
     all_objects = []
     if centre is not None:
@@ -25,13 +24,8 @@ def main_page(request):
         all_objects = TempVisitNameMapping.objects.filter(centre=centre)
     else:
         all_objects = TempVisitNameMapping.objects.all()
-    staff_member = StaffMember.objects.all().get(user_mapping=request.user)
-    activities = Activity.objects.all()
-    context_dict = {"centres": staff_member.centre.all(),"activities":[]}
-    day = datetime.date.today().weekday()
-    for a in activities:
-        for t in a.get_scheduled_times(day):
-            pass
+    staff_member = StaffMember.objects.get(user_mapping=request.user)
+    context_dict = {"centres": staff_member.centre.all(), "activities": []}
     values = []
     for visitor in all_objects:
         if Util.check_user_can_access(staff_member, visitor.related_visit):
@@ -112,14 +106,18 @@ class DeleteSchedule(View,LoginRequiredMixin):
     def post(self,request):
         return redirect('/delactivity/')
 
-class ShowSchedule(View,LoginRequiredMixin):
+class ShowSchedule(LoginRequiredMixin, View):
     def get(self,request,slug):
-        context_dixt = {}
-        activities = Activity.objects.all().filter(centre=Centre.objects.get(name=slug))
+        context_dict = {}
+        dow = datetime.date.today().weekday()
+        activities = Activity.objects.filter(centre=Centre.objects.get(pk=slug))
         activity_list = []
         for a in activities.all():
-            activity_list.append(Util.get_activity_name_in_user_lang(get_user(request),a))
-        print(activity_list)
+            if len(a.get_scheduled_times(dow)) > 0:
+                activity_list += [{"name": (Util.get_activity_name_in_user_lang(get_user(request),a)),
+                                  "instructor": a.instructed_by.name,
+                                  "time_schedule": a.get_scheduled_times(dow)}]
+        return render(request, "maggies/show_schedule.html", {"events": activity_list})
 
 class AddVisitor(LoginRequiredMixin, View):
 
