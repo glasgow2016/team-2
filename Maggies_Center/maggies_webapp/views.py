@@ -3,8 +3,6 @@ from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user
 from .forms import BaseUserForm, NewStaffForm, VisitForm, TempVisitNameMappingForm
-from maggies_webapp.models import Visit, Activity, StaffMember
-    TempVisitNameMappingForm
 from maggies_webapp.models import Visitor, Activity, StaffMember
 from django.http import HttpResponseNotFound
 from django.contrib.auth.decorators import login_required
@@ -95,5 +93,5 @@ class Export(View, LoginRequiredMixin):
     def get(self, request):
         print("Received export request")
         print(request.GET.get('startdate'), request.GET.get('enddate'))
-        visits = Visit.objects.all()
+        visits = Visitor.objects.all()
         print(visits)
