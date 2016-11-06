@@ -58,6 +58,7 @@
                 <a href="/" class="brand-logo black-text"><img src="{% static 'img/logo.png'%}" alt="maggies visitor admin" /></a>
                 <ul class="right hide-on-med-and-down">
 				  {% if user.is_authenticated %}
+					<li><a href="{% url 'schedule'%}">Schedule</a></li>
 					<li><a href="{% url 'auth_logout' %}">Sign out</a></li>
 				  {% else %}
 					<li><a href="{% url 'auth_login' %}">Log in</a></li>
@@ -66,15 +67,17 @@
               </div>
             </nav>
           </div>
+		  
+		  <!-- Main page -->
 		  <div class="container">
 		  <h4 class="header">
 			{% block header %}{% endblock %}
 		  </h4>
           {% block content %}
           {% endblock %}
-		  
 		  </div>
-
+		  
+			<!-- footer -->
             <footer class="page-footer white black-text">
               <div class="footer-copyright black-text">
                 <div class="container">

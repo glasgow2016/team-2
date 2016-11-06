@@ -55,9 +55,9 @@ class AddUser(LoginRequiredMixin, View):
 class Schedule(LoginRequiredMixin, View):
     def get(self,request):
         context_dict = {}
-        current_user = get_user(request)
         current_user = StaffMember.objects.get(user_mapping = get_user(request))
         context_dict["centres"] = current_user.centre.all()
+        context_dict["activities"] = ['Where Now?','Creative Writing','Yoga','Meditation']
         return render(request,'maggies/schedule.html',context_dict)
 
     def post(self, request):
@@ -81,7 +81,7 @@ class Schedule(LoginRequiredMixin, View):
             for staff_member in activity_dict[key]["staff"]:
                 act.instructed_by.add(StaffMember.objects.get(name=staff_member))
             act.save()
-        return render(request, 'maggies/schedule.html')
+        return redirect('/schedule/')
 
 
 class AddVisitor(LoginRequiredMixin, View):
