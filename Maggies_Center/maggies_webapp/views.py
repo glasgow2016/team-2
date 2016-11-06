@@ -4,6 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user
 from .forms import BaseUserForm, NewStaffForm, VisitForm, TempVisitNameMappingForm
 from maggies_webapp.models import Visit, Activity, StaffMember
+from maggies_webapp.stats import *
 from django.http import HttpResponseNotFound
 from django.contrib.auth.models import User
 
@@ -63,8 +64,9 @@ def schedule(request):
 class AddVisitor(View, LoginRequiredMixin):
 
     def get(self, request):
+        get_visitor_stats()
         form_a = TempVisitNameMappingForm()
-        form_b = VisitForm()
+        form_b = VisitForm(initial={"gender": Visit.GENDER_CHOICES[0][0]})
         return render(request, "maggies/new_visitor.html", {"form_a": form_a, "form_b": form_b})
 
     def post(self, request):
