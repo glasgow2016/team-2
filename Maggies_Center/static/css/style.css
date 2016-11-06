@@ -29,7 +29,7 @@
 	}
 	
 	.big-card {
-		height: 190px;
+		height: 184px;
 	}
 	.big-card > div {
 		font-size: 180px;
@@ -54,5 +54,8 @@
 	.card-info {
 		display: inline-block;
 		height: 100%;
+	}
+	#cool-card {
+		padding: 30px;
 	}
 	
