@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Schedule{% endblock %}
+{% block content %}
+
+    {% for event in events %}
+    <div class="card horizontal">
+        <div class="card-stacked">
+		  <div class="card-content">
+			<div class="card-info">
+				<h5>{{ event.name }}</h5>
+                <ul>
+                    {% for schedule in event.time_schedule %}
+                        <li>{{ schedule.0 }} - {{ schedule.1 }}</li>
+                    {% endfor %}
+                </ul>
+			</div>
+		  <div class="card-action">
+			<a href="#">Cancel event</a>
+		  </div>
+		</div>
+	  </div>
+    </div>
+    {% endfor %}
+
+{% endblock %}

@@ -11,5 +11,5 @@ urlpatterns = [
         url(r'^add-user/', AddUser.as_view(), name="add-user"),
         url(r'^add-visitor/', AddVisitor.as_view(), name="add-visitor"),
         url(r'^async/', include("maggies_webapp.async_urls")),
-        url(r'^show/(?P<slug>[\w-]+)/$',ShowSchedule.as_view(),name='show'),
+        url(r'^show/(?P<slug>[0-9]+)/$',ShowSchedule.as_view(),name='show'),
     ]

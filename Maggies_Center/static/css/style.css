@@ -61,6 +61,7 @@ z-index: 1;
 	}
 	#cool-form {
 		padding: 30px;
+		padding-bottom: 50px;
 	}
 	
 	.select-wrapper input.select-dropdown {
