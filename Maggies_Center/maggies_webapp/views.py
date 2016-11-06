@@ -59,15 +59,7 @@ class Schedule(View, LoginRequiredMixin):
         context_dict = {}
         current_user = get_user(request)
         current_user = StaffMember.objects.get(user_mapping = get_user(request))
-        # context_dict["schedule"] = {}
-        # for activity in Activity.objects.filter(centre=current_user.centre):
-        #     for i in range(0,7,1):
-        #         context_dict["schedule"][i] = activity.scheduled_times_array[i]
-                # context_dict["schedule"][day] = {}
-                # context_dict["schedule"][day][activity.id] = []
-                # for time in activity.scheduled_times_array[day]:
-                #     context_dict["schedule"][day][activity.id].append(time)
-        # Activity.objects.filter(centre="blah")
+        context_dict["centres"] = current_user.centre.all()
         return render(request,'maggies/schedule.html',context_dict)
 
     def post(self, request):
@@ -83,11 +75,13 @@ class Schedule(View, LoginRequiredMixin):
 
         for key in activity_dict:
             act = Activity()
-            act.centre =StaffMember.objects.get(user_mapping=get_user(request)).centre
-            for staff_member in activity_dict[key]["staff"]:
-                act.instructed_by.add(staff_member)
-            act.set_scheduled_times(data.get("day"), activity_dict[key]["times"])
+            act.centre = Centre.objects.get(name=data.get("centre"))
+            act.set_scheduled_times(int(data.get("day")), activity_dict[key]["times"])
+            print (data.get("day"))
             print (act.centre)
+            act.save()
+            for staff_member in activity_dict[key]["staff"]:
+                act.instructed_by.add(StaffMember.objects.get(name=staff_member))
             act.save()
         return render(request, 'maggies/schedule.html')
 
