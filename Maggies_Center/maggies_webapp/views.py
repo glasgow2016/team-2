@@ -4,8 +4,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user
 from .forms import BaseUserForm, NewStaffForm, VisitForm, TempVisitNameMappingForm
 from maggies_webapp.models import Visit, Activity, StaffMember
-from maggies_webapp.stats import *
+    TempVisitNameMappingForm
+from maggies_webapp.models import Visitor, Activity, StaffMember
 from django.http import HttpResponseNotFound
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
 from django.contrib import messages
@@ -43,6 +45,7 @@ class AddUser(View, LoginRequiredMixin):
                                                          "form_b": form_b})
 
 
+@login_required
 def schedule(request):
     context_dict = {}
     current_user = get_user(request)
@@ -83,7 +86,8 @@ class AddVisitor(View, LoginRequiredMixin):
                 messages.warning(request, "Invalid user information")
         else:
             messages.warning(request, "Invalid visitor information")
-        return render(request, "maggies/new_visitor.html", {"form_a": form_a, "form_b": form_b})
+        return render(request, "maggies/new_visitor.html", {"form_a": form_a,
+                                                            "form_b": form_b})
 
 
 class Export(View, LoginRequiredMixin):
