@@ -32,6 +32,11 @@
 		</div>
 		<div class="card-stacked">
 		  <div class="card-content">
+		  {% if visitor.in_building %}
+			<i class="material-icons red-text">home</i>
+		  {% else %}
+			<i class="material-icons grey-text text-lighten-1">home</i>
+		  {% endif %}
 			<h5>{{ visitor.name }}</h5>
 		    {{ visitor.gender }}<br/>
 		    {{ visitor.cancer_type }}
