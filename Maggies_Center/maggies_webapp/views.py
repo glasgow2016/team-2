@@ -15,21 +15,28 @@ import datetime
 
 @login_required
 def main_page(request):
-    if request.user is None:
-        return redirect('/accounts/login/')
+    staff_member = StaffMember.objects.get(user_mapping=request.user)
+    centre = request.GET.get("centre", None)
+    all_objects = []
+    if centre is not None:
+        centre = get_object_or_404(Centre, pk=centre)
+        all_objects = TempVisitNameMapping.objects.filter(centre=centre)
+    else:
+        all_objects = TempVisitNameMapping.objects.all()
     staff_member = StaffMember.objects.all().get(user_mapping=request.user)
     activities = Activity.objects.all()
-    context_dict = {}
+    context_dict = {"centres": staff_member.centre.all(),"activities":[]}
     day = datetime.date.today().weekday()
     for a in activities:
         for t in a.get_scheduled_times(day):
             pass
-
     values = []
-    for visitor in TempVisitNameMapping.objects.all():
+    for visitor in all_objects:
         if Util.check_user_can_access(staff_member, visitor.related_visit):
             values += [Util.generate_dict_from_instance(visitor)]
-    return render(request,'maggies/main.html', {'visitors': values})
+
+    context_dict["visitors"] = values
+    return render(request,'maggies/main.html', context_dict)
 
 
 class AddUser(LoginRequiredMixin, View):
@@ -99,7 +106,7 @@ class DeleteSchedule(View,LoginRequiredMixin):
         context_dict["activities"] = []
         for a in activities:
             context_dict["activities"].append(a)
-        return render(request,'maggies/delete_schedule.html',context_dict)
+        return render(request, 'maggies/delete_schedule.html',context_dict)
 
     def post(self,request):
         return redirect('/delactivity/')

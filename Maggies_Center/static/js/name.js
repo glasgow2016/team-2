@@ -3,6 +3,7 @@ var select_id_complete;
 var tip_shown = false;
 
 $(document).ready(function() {
+    $("#suggestions").hide();
     form_id_complete = "#" + form_id;
     select_id_complete = "#" + select_id;
     $(form_id_complete).keyup(function() {
@@ -12,6 +13,11 @@ $(document).ready(function() {
                 url: "/async/get-suggestion/" + centre_id + "/" + $(form_id_complete).val(),
                 success: function(data) {
                     $("#suggestions_in").html("");
+                    if (data.length == 0) {
+                        $("#suggestions").hide();
+                    } else {
+                        $("#suggestions").show();
+                    }
                     $.each(data, function(index, item) {
                         // In the future, replace with proper jQuery node instantiation, instead
                         // of html strings. Time doesn't allow otherwise
