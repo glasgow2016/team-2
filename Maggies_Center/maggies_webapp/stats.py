@@ -8,7 +8,7 @@ def get_visitor_stats():
     b = map(lambda x: x[0], values)
     for i in b:
         print(i)
-    most_common(b)
+    #most_common(b)
 
 
 

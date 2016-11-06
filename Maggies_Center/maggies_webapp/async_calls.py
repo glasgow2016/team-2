@@ -10,7 +10,7 @@ def get_suggestion(request, partial):
     if len(temp_results) == 0:
         temp_results = []
         for visitor in TempVisitNameMapping.objects.all():
-            #if ()
             pass
+            #if ()
     return json.dumps([{"name": obj.visitor_name, "id": obj.related_visitor}
                        for obj in temp_results])

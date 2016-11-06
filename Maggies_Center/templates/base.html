@@ -57,9 +57,9 @@
                 <a href="/" class="brand-logo black-text"><img src="{% static 'img/logo.png'%}" alt="maggies visitor admin" /></a>
                 <ul class="right hide-on-med-and-down">
 				  {% if user.is_authenticated %}
-					<li><a href="/signout/">Sign out</a></li>
+					<li><a href="{% url 'auth_logout' %}">Sign out</a></li>
 				  {% else %}
-					<li><a href="/login/">Log in</a></li>
+					<li><a href="{% url 'auth_login' %}">Log in</a></li>
 				  {% endif %}
                 </ul>
               </div>
