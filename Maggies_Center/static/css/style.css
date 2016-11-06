@@ -44,6 +44,15 @@
 	}
 	.card-image > img {
 		max-height: 128px;
-		padding: 15px;
+		padding: 25px 15px 15px 15px;
+	}
+	.card-house-button {
+		display: inline-block;
+		height: 100%;
+		float: right;
+	}
+	.card-info {
+		display: inline-block;
+		height: 100%;
 	}
 	

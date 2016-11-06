@@ -41,17 +41,18 @@
 		</div>
 		<div class="card-stacked">
 		  <div class="card-content">
-			  <div class="pull-right">
+			<div class="card-house-button">
 			  {% if visitor.in_building %}
 				<i class="material-icons red-text">home</i>
 			  {% else %}
 				<i class="material-icons grey-text text-lighten-1">home</i>
 			  {% endif %}
+			</div>
+			<div class="card-info">
 				<h5>{{ visitor.name }}</h5>
 				{{ visitor.gender }}<br/>
 				{{ visitor.cancer_type }}
-			  </div>
-		  </div>
+			</div>
 		  <div class="card-action">
 			<a href="{% url 'add-visitor' %}?id={{ visitor.id }}">View visitor</a>
 		  </div>
