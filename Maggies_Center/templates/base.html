@@ -3,6 +3,9 @@
 {% load static %}
     <head>
         <title>{% block title %}{% endblock %}</title>
+		<!-- favicon -->
+		<link href="{% static 'img/favicon.ico'%}" type="image/x-icon" rel="icon">
+		<link href="{% static 'img/favicon.ico'%}" type="image/x-icon" rel="shortcut icon">
         <!--Import Google Icon Font-->
         <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <!--Import materialize.css-->
@@ -11,8 +14,22 @@
 		
         <!--Let browser know website is optimized for mobile-->
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="{% static 'js/schedule.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
     </head>
     <body>
+        <script>
+            // load messages as an array
+            {% if messages %}
+                var messages = [{% for message in messages %}'{{ message|safe }}'
+                    {% ifnotequal forloop.counter0 0 %},{% endifnotequal %}{% endfor %}];
+            {% else %}
+                var messages = [];
+            {% endif %}
+        </script>
+        <script src="{% static 'js/messages.js' %}"></script>
 		<!-- Navbar -->
           <div class="navbar-fixed">
             <nav class="white">
@@ -37,7 +54,7 @@
               
 			  <!-- Menu -->
 			  <div class="nav-wrapper container">
-                <a href="#!" class="brand-logo black-text"><img src="{% static 'img/logo.png'%}" alt="maggies visitor admin" /></a>
+                <a href="/" class="brand-logo black-text"><img src="{% static 'img/logo.png'%}" alt="maggies visitor admin" /></a>
                 <ul class="right hide-on-med-and-down">
 				  {% if user.is_authenticated %}
 					<li><a href="/signout/">Sign out</a></li>
@@ -49,13 +66,7 @@
             </nav>
           </div>
 		  <div class="container">
-          {% if messages %}
-            <ul class="messages">
-            {% for message in messages %}
-                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-            {% endfor %}
-            </ul>
-          {% endif %}
+
           {% block content %}
           {% endblock %}
 		  </div>
@@ -85,10 +96,5 @@
                 </div>
               </div>
             </footer>
-
-        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-        <script type="text/javascript" src={% static "js/schedule.js" %}></script>
-        <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
     </body>
 </html>
