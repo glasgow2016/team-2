@@ -74,8 +74,8 @@
 			</div>
 			<div class="card-info">
 				<h5>{{ visitor.name }}</h5>
-				{{ visitor.gender }}<br/>
-				{{ visitor.cancer_type }}
+				{{ visitor.cancer_type }}<br/>
+				Seen by: {{ visitor.seen_by }}
 			</div>
 		  <div class="card-action">
 			<a href="{% url 'add-visitor' %}?id={{ visitor.id }}">View visitor</a>
