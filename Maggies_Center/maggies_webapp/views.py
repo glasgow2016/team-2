@@ -10,6 +10,7 @@ from django.contrib.auth.models import User
 from .stats import get_visitor_stats
 from django.contrib import messages
 from .util import Util
+from django.http import HttpResponse
 import datetime
 import csv
 
@@ -181,6 +182,20 @@ class Export(LoginRequiredMixin, View):
             center = form.cleaned_data["center"]
             visitors = Visit.objects.all().filter(timestamp__gte=startdate, timestamp__lte=enddate, visit_site=center)
             print(visitors)
+
+            response = HttpResponse(content_type='text/csv')
+            response['Content-Disposition'] = 'attachment; filename="' + str(startdate) + '-' + str(enddate) + '-' + str(center) + '.csv"'
+
+            writer = csv.writer(response)
+            writer.writerow(['Timestamp', 'Journey Stage', 'Center Location', 'Nature of Visit', 'Cancer Type', 'Seen by', 'Visit Type', 'Activities'])
+            for visitor in visitors:
+                activities = ""
+                for activity in visitor.activities.all():
+                    activities += Util.get_activity_name_in_user_lang(request.user, activity) + ';'
+                row = [str(visitor.timestamp), str(visitor.journey_stage), visitor.visit_site, visitor.nature_of_visit, visitor.cancer_site, visitor.seen_by, visitor.type, activities]
+                writer.writerow(row)
+
+            return response
         else:
             print("Export failed to retrieve input")
         return render(request, "maggies/export.html", {"form": form})
