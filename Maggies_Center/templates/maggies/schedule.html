@@ -4,19 +4,26 @@
 
 
     <div class="row">
-        <form class="col s12">
+        <form class="col s12" action="">
+            <div class="row">
+
+                <button class="btn waves-effect waves-light"  type="submit" value="Submit">Save
+                    <i class="material-icons right">save</i>
+                </button>
+            </div>
 
             <div class="row">
-                <label>Day</label>
-                <select title="day">
-                    <option value="0">Monday</option>
-                    <option value="1">Tuesday</option>
-                    <option value="2">Wednesday</option>
-                    <option value="3">Thursday</option>
-                    <option value="4">Friday</option>
-                    <option value="5">Saturday</option>
-                    <option value="6">Sunday</option>
-                </select>
+                <div class="col s6"><label>Day</label>
+                    <select title="day">
+                        <option value="0">Monday</option>
+                        <option value="1">Tuesday</option>
+                        <option value="2">Wednesday</option>
+                        <option value="3">Thursday</option>
+                        <option value="4">Friday</option>
+                        <option value="5">Saturday</option>
+                        <option value="6">Sunday</option>
+                    </select></div>
+
             </div>
             <div class="row" id="last-row">
                 <div class="input-field col s3">
@@ -46,4 +53,5 @@
 
         </form>
     </div>
+
 {% endblock %}

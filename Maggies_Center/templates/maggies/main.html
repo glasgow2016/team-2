@@ -1,5 +1,14 @@
 {% extends "base.html" %}
+{% block title%}Maggies Visitors' Hub{% endblock %}
+{% block header %}
+	{% if user.is_authenticated %}
+		Hello, {{ staffname }}.
+	{% else %}
+		Wellcome to MVH. Please sign in.
+	{% endif %}
+{% endblock %}
 {% block content%}
+
 <div class="col s12 m5">
   <div class="card horizontal">
     <div class="card-action">
@@ -7,6 +16,20 @@
     </div>
   </div>
 </div>
+
+<div class="row">
+<div class="card btn" id="" onclick="addVisitorCard()">+</div>
+  <div class="col s12 m4">
+    <div class="card grey">
+      <div class="card-content white-text">
+        <span class="card-title">Title (name?)</span>
+        <p>Cool info goes here! Wow!</p>
+      </div>
+      <div class="card-action">
+        <a href="#">Save</a>
+      </div>
+    </div>
+  </div>
 
 {% if visitors %}
 {% for visitor in visitors %}
