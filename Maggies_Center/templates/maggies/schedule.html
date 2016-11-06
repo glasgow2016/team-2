@@ -44,7 +44,10 @@
             <div class="row" id="last-row">
                 <div class="input-field col s3">
                     <select name="activity" class="browser-default" title="activity">
-                        <option value="a">A</option>
+
+                        {% for a in activities %}
+                            <option value={{ a }}>{{ a }}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 <div class="input-field col s2">
