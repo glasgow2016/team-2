@@ -5,7 +5,19 @@ $(document).ready(function() {
 	$("#centre_select").change(function() {
 	    window.location.href=window.location.href.split("?")[0] + "?centre=" + $(this).val();
 	});
-	$("#visitorIn").firstChild.firstChild.click(function(e) {
-		this.html = "<a href=\"#\" id=\"visitorOut\"><i class=\"material-icons grey-text text-lighten-1\">home</i>"
-	})
+	$(".card-house-button a").click(function(e) {
+		visitor_in($(this).attr("data-uid"));
+	});
 });
+
+function visitor_in(mapping_id) {
+    $.ajax({
+        url: "/async/set-left/" + mapping_id + "/",
+        context: document.body,
+        success: function () {
+            $(this).addClass("done");
+			// Use some more complicated DOM manipulation when time is nicer with us
+			window.reload();
+        }
+    });
+}
