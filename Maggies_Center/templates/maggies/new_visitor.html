@@ -2,10 +2,7 @@
 {% load static %}
 {% block title %}New Visitor{% endblock %}
 {% block head_block %}
-  <script src="{% static 'js/jquery-ui.min.js' %}"></script>
   <script src="{% static 'js/name.js' %}"></script>
-  <link rel="stylesheet" href="{% static 'css/jquery-ui.structure.min.css' %}">
-  <link rel="stylesheet" href="{% static 'css/jquery-ui.min.css' %}">
 {% endblock %}
 {% block header%}New Visitor{% endblock %}
 {% block content %}
@@ -17,6 +14,12 @@
 <!-- <div id='visitor-modal' class='modal'> -->
   <div class="modal-content">
     <form method="post">
+      <div id="suggestions">
+        <strong>Maybe you were looking for...</strong>
+        <div id="suggestions_in">
+
+        </div>
+      </div>
       <div>
         {% csrf_token %}
         {{ form_a.as_p }}

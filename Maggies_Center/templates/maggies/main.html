@@ -45,7 +45,7 @@
 		    {{ visitor.cancer_type }}
 		  </div>
 		  <div class="card-action">
-			<a href="/add-visitor/">View visitor</a>
+			<a href="{% url 'add-visitor' %}?id={{ visitor.id }}">View visitor</a>
 		  </div>
 		</div>
 	  </div>

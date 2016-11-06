@@ -1,5 +1,3 @@
-var last_tags = [];
-var tag_mappings = {};
 var form_id_complete;
 var select_id_complete;
 var tip_shown = false;
@@ -13,22 +11,25 @@ $(document).ready(function() {
             $.ajax({
                 url: "/async/get-suggestion/" + centre_id + "/" + $(form_id_complete).val(),
                 success: function(data) {
-                    last_tags = [];
-                    tag_mappings = {};
+                    $("#suggestions_in").html("");
                     $.each(data, function(index, item) {
-                        last_tags.push(item["name"]);
-                        tag_mappings[item["name"]] = item["id"];
-                    });
-                    $(form_id_complete).autocomplete({
-                        source: last_tags,
-                        response: function (event, ui) {
-                            ui.content = $.map(ui.content, function(value, key) {
-                                return {
-                                    label: value,
-                                    value: value
-                                }
-                            });
-                        }
+                        // In the future, replace with proper jQuery node instantiation, instead
+                        // of html strings. Time doesn't allow otherwise
+                        $("#suggestions_in").append("<div class='card horizontal'>" +
+		                    "<div class='card-image'>" +
+		                        "<img src='http://lorempixel.com/100/190/nature/6'>" +
+		                    "</div>" +
+		                    "<div class='card-stacked'>" +
+		                        "<div class='card-content'>" +
+			                        "<h5>" + item['name'] + "</h5>" +
+		                            item["gender"] + "<br/>" + item["cancer_type"] +
+		                        "</div>" +
+		                        "<div class='card-action'>" +
+			                        "<a href='/add-visitor/?id=" + item["id"] +
+			                        "'>View visitor</a>" +
+		                        "</div>" +
+                            "</div>" +
+	                        "</div>");
                     });
                 }
             });
