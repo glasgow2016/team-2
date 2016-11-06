@@ -19,7 +19,22 @@
     <form method="post">
       <div>
         {% csrf_token %}
-        {{ form_a.as_p }}
+		
+		<!-- form_a -->
+		<p>
+			{{ form_a.centre.label_tag }}
+			{{ form_a.centre}}
+		</p>
+		<p>
+			{{ form_a.visitor_name.label_tag }}
+			{{ form_a.visitor_name }}
+		</p>
+		<p>
+			{{ form_a.is_in_Building }}
+			{{ form_a.is_in_Building.label_tag }}
+		</p>
+		
+		<!-- form b -->
         {{ form_b.as_p }}
       </div>
       <div class="modal-footer">
