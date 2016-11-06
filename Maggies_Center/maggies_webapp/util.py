@@ -4,13 +4,15 @@ from maggies_webapp.models import Centre, StaffMember, Activity, ActivityName
 class Util(object):
     @staticmethod
     def generate_dict_from_instance(visitor):
-        return {
-            'name': visitor.visitor_name,
-            'gender': visitor.related_visit.get_gender_display(),
-            'cancer_type': visitor.related_visit.get_cancer_site_display(),
-            'id': visitor.pk,
-            'in_building': visitor.is_in_Building
-        }
+
+         return {
+                'name': visitor.visitor_name,
+                'gender': visitor.related_visit.get_gender_display(),
+                'cancer_type': visitor.related_visit.get_cancer_site_display(),
+                'id': visitor.pk,
+                'in_building': visitor.is_in_Building,
+                'seen_by': visitor.related_visit.seen_by.name
+         }
 
     @staticmethod
     def check_user_can_access(staffmember, visit):

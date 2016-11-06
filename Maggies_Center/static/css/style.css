@@ -29,7 +29,7 @@
 	}
 	
 	.big-card {
-		height: 190px;
+		height: 184px;
 	}
 	.big-card > div {
 		font-size: 180px;
@@ -42,3 +42,20 @@
 	.card .card-action {
 		padding: 15px;
 	}
+	.card-image > img {
+		max-height: 128px;
+		padding: 25px 15px 15px 15px;
+	}
+	.card-house-button {
+		display: inline-block;
+		height: 100%;
+		float: right;
+	}
+	.card-info {
+		display: inline-block;
+		height: 100%;
+	}
+	#cool-form {
+		padding: 30px;
+	}
+	

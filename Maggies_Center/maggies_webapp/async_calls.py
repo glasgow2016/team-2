@@ -1,5 +1,6 @@
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
 from .models import TempVisitNameMapping
 from .util import Util
 
@@ -21,3 +22,9 @@ def get_suggestion(request, partial, centre_id):
         temp_results = [Util.generate_dict_from_instance(x) for x in
                         temp_results]
     return JsonResponse(temp_results, safe=False)
+
+@login_required
+def visitor_left(request, visitor_id):
+    visitor_status = TempVisitNameMapping.objects.filter(pk=visitor_id)
+    visitor_status.is_in_Building = False
+    visitor_status.save()

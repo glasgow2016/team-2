@@ -10,13 +10,21 @@ from django.contrib.auth.models import User
 from .stats import get_visitor_stats
 from django.contrib import messages
 from .util import Util
+from django.http import HttpResponse
 import datetime
+import csv
 
 
 @login_required
 def main_page(request):
-    if request.user is None:
-        return redirect('/accounts/login/')
+    staff_member = StaffMember.objects.get(user_mapping=request.user)
+    centre = request.GET.get("centre", None)
+    all_objects = []
+    if centre is not None:
+        centre = get_object_or_404(Centre, pk=centre)
+        all_objects = TempVisitNameMapping.objects.filter(centre=centre)
+    else:
+        all_objects = TempVisitNameMapping.objects.all()
     staff_member = StaffMember.objects.all().get(user_mapping=request.user)
     activities = Activity.objects.all()
     context_dict = {"centres": staff_member.centre.all(),"activities":[]}
@@ -24,11 +32,11 @@ def main_page(request):
     for a in activities:
         for t in a.get_scheduled_times(day):
             pass
-
     values = []
-    for visitor in TempVisitNameMapping.objects.all():
+    for visitor in all_objects:
         if Util.check_user_can_access(staff_member, visitor.related_visit):
             values += [Util.generate_dict_from_instance(visitor)]
+
     context_dict["visitors"] = values
     return render(request,'maggies/main.html', context_dict)
 
@@ -100,7 +108,7 @@ class DeleteSchedule(View,LoginRequiredMixin):
         context_dict["activities"] = []
         for a in activities:
             context_dict["activities"].append(a)
-        return render(request,'maggies/delete_schedule.html',context_dict)
+        return render(request, 'maggies/delete_schedule.html',context_dict)
 
     def post(self,request):
         return redirect('/delactivity/')
@@ -178,8 +186,25 @@ class Export(LoginRequiredMixin, View):
     def post(self, request):
         form = ExportForm(request.POST)
         if form.is_valid():
-            print(form.center)
-            print(form.startdate)
+            startdate = form.cleaned_data["startdate"]
+            enddate = form.cleaned_data["enddate"]
+            center = form.cleaned_data["center"]
+            visitors = Visit.objects.all().filter(timestamp__gte=startdate, timestamp__lte=enddate, visit_site=center)
+            print(visitors)
+
+            response = HttpResponse(content_type='text/csv')
+            response['Content-Disposition'] = 'attachment; filename="' + str(startdate) + '-' + str(enddate) + '-' + str(center) + '.csv"'
+
+            writer = csv.writer(response)
+            writer.writerow(['Timestamp', 'Journey Stage', 'Center Location', 'Nature of Visit', 'Cancer Type', 'Seen by', 'Visit Type', 'Activities'])
+            for visitor in visitors:
+                activities = ""
+                for activity in visitor.activities.all():
+                    activities += Util.get_activity_name_in_user_lang(request.user, activity) + ';'
+                row = [str(visitor.timestamp), str(visitor.journey_stage), visitor.visit_site, visitor.nature_of_visit, visitor.cancer_site, visitor.seen_by, visitor.type, activities]
+                writer.writerow(row)
+
+            return response
         else:
             print("Export failed to retrieve input")
         return render(request, "maggies/export.html", {"form": form})
