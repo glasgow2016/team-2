@@ -14,10 +14,10 @@ $(document).ready(function () {
         $button.remove();
         row_count++;
     });
-    
+
+    $('#centre_select').change(function(){
+        alert("yep");
+    });
+
 });
 
-function createRow() {
-
-    
-}
