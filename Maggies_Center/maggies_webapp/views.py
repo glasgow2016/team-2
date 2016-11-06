@@ -83,6 +83,18 @@ class Schedule(LoginRequiredMixin, View):
             act.save()
         return redirect('/schedule/')
 
+class DeleteSchedule(View,LoginRequiredMixin):
+    def get(self,request):
+        context_dict = {}
+        current_user = get_user(request)
+        activities = Activity.objects.all()
+        context_dict["activities"] = []
+        for a in activities:
+            context_dict["activities"].append(a)
+        return render(request,'maggies/delete_schedule.html',context_dict)
+
+    def post(self,request):
+        return redirect('/delactivity/')
 
 class AddVisitor(LoginRequiredMixin, View):
 
