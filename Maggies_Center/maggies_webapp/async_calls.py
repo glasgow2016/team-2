@@ -24,7 +24,7 @@ def get_suggestion(request, partial, centre_id):
     return JsonResponse(temp_results, safe=False)
 
 @login_required
-def visitor_left(request, visitor_id):
-    visitor_status = TempVisitNameMapping.objects.filter(pk=visitor_id)
+def visitor_left(request, person_id):
+    visitor_status = TempVisitNameMapping.objects.filter(pk=person_id)
     visitor_status.is_in_Building = False
     visitor_status.save()

@@ -91,7 +91,8 @@ class Activity(models.Model):
 
 
 class ActivityName(models.Model):
-    activity = models.ForeignKey(Activity, on_delete=models.CASCADE)
+    activity = models.ForeignKey(Activity, on_delete=models.CASCADE,
+                                 unique=False)
     lang = models.ForeignKey(Language, on_delete=models.CASCADE)
     translated_name = models.CharField(max_length=100)
 
