@@ -5,5 +5,7 @@ $(document).ready(function() {
 	$("#centre_select").change(function() {
 	    window.location.href=window.location.href.split("?")[0] + "?centre=" + $(this).val();
 	});
-	$("visitorIn").click
+	$("#visitorIn").firstChild.click(function(e) {
+		alert("woo");
+	})
 });
