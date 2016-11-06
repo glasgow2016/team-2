@@ -10,16 +10,28 @@ from django.contrib.auth.models import User
 from .stats import get_visitor_stats
 from django.contrib import messages
 from .util import Util
+import datetime
 
 
 @login_required
 def main_page(request):
     staff_member = StaffMember.objects.get(user_mapping=request.user)
     centre = request.GET.get("centre", None)
+    all_objects = []
     if centre is not None:
         centre = get_object_or_404(Centre, pk=centre)
+        all_objects = TempVisitNameMapping.objects.filter(centre=centre)
+    else:
+        all_objects = TempVisitNameMapping.objects.all()
+    staff_member = StaffMember.objects.all().get(user_mapping=request.user)
+    activities = Activity.objects.all()
+    context_dict = {}
+    day = datetime.date.today().weekday()
+    for a in activities:
+        for t in a.get_scheduled_times(day):
+            pass
     values = []
-    for visitor in TempVisitNameMapping.objects.filter(centre=centre):
+    for visitor in all_objects:
         if Util.check_user_can_access(staff_member, visitor.related_visit):
             values += [Util.generate_dict_from_instance(visitor)]
     return render(request, 'maggies/main.html', {'visitors': values})

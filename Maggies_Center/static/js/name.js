@@ -15,6 +15,8 @@ $(document).ready(function() {
                     $("#suggestions_in").html("");
                     if (data.length == 0) {
                         $("#suggestions").hide();
+                    } else {
+                        $("#suggestions").show();
                     }
                     $.each(data, function(index, item) {
                         // In the future, replace with proper jQuery node instantiation, instead
