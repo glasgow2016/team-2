@@ -6,6 +6,7 @@ from .util import Util
 import difflib
 
 
+@login_required
 def get_suggestion(request, partial, centre_id):
     temp_results = TempVisitNameMapping.objects.filter(
         visitor_name__icontains=partial, centre__pk=centre_id)

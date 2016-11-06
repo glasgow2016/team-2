@@ -2,10 +2,7 @@
 {% load static %}
 {% block title %}New Visitor{% endblock %}
 {% block head_block %}
-  <script src="{% static 'js/jquery-ui.min.js' %}"></script>
   <script src="{% static 'js/name.js' %}"></script>
-  <link rel="stylesheet" href="{% static 'css/jquery-ui.structure.min.css' %}">
-  <link rel="stylesheet" href="{% static 'css/jquery-ui.min.css' %}">
 {% endblock %}
 {% block header%}New Visitor{% endblock %}
 {% block content %}
@@ -17,41 +14,35 @@
 <!-- <div id='visitor-modal' class='modal'> -->
   <div class="modal-content">
     <form method="post">
-	<div class="col s12 m6 l6">
-      <div class="card form-card">
+      <div id="suggestions">
+        <strong>Maybe you were looking for...</strong>
+        <div id="suggestions_in">
+
+        </div>
+      </div>
+      <div>
         {% csrf_token %}
+		
 		<!-- form_a -->
 		<p>
 			{{ form_a.centre.label_tag }}
 			{{ form_a.centre}}
-			{{ form_a.centre.errors }}
 		</p>
 		<p>
 			{{ form_a.visitor_name.label_tag }}
 			{{ form_a.visitor_name }}
-			{{ form_a.visitor_name.errors }}
 		</p>
 		<p>
 			{{ form_a.is_in_Building }}
 			{{ form_a.is_in_Building.label_tag }}
-			{{ form_a.is_in_Building.errors }}
 		</p>
 		
 		<!-- form b -->
-        {% for field in form_b %}
-		<p>
-			{{ field.label_tag}}
-			{{ field }}
-			{{ field.errors }}
-		</p>
-		{% endfor %}
-		<p>
-		</p>
+        {{ form_b.as_p }}
       </div>
       <div class="modal-footer">
         <input type="submit" value="Update" class="btn right waves-effect waves-light">
       </div>
-	  </div>
     </form>
   </div>
 <!-- </div> -->

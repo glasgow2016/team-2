@@ -65,6 +65,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                "Maggies_Center.context_processor.includeProfile"
             ],
         },
     },
@@ -131,7 +132,7 @@ STATICFILES_DIRS = (
     STATIC_DIR,
 )
 
-LOGIN_URL = "django.contrib.auth.views.login"
+LOGIN_URL = "auth_login"
 LOGIN_REDIRECT_URL = "/"
 
 REGISTRATION_OPEN = False

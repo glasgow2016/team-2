@@ -23,7 +23,7 @@ def main_page(request):
     return render(request,'maggies/main.html', {'visitors': values})
 
 
-class AddUser(View, LoginRequiredMixin):
+class AddUser(LoginRequiredMixin, View):
 
     def get(self, request):
         form_a = BaseUserForm()
@@ -51,7 +51,7 @@ class AddUser(View, LoginRequiredMixin):
                                                          "form_b": form_b})
 
 
-class Schedule(View, LoginRequiredMixin):
+class Schedule(LoginRequiredMixin, View):
     def get(self,request):
         context_dict = {}
         current_user = StaffMember.objects.get(user_mapping = get_user(request))
@@ -83,7 +83,7 @@ class Schedule(View, LoginRequiredMixin):
         return redirect('/schedule/')
 
 
-class AddVisitor(View, LoginRequiredMixin):
+class AddVisitor(LoginRequiredMixin, View):
 
     def get(self, request):
         stats = get_visitor_stats()
@@ -111,7 +111,7 @@ class AddVisitor(View, LoginRequiredMixin):
                                                             "form_b": form_b})
 
 
-class Export(View, LoginRequiredMixin):
+class Export(LoginRequiredMixin, View):
 
     def get(self, request):
         print("Received export request")
