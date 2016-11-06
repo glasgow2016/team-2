@@ -1,34 +1,35 @@
 {% extends "base.html" %}
 {% block content%}
-  <div class="col s12 m7">
-    <div class="card horizontal">
-      <div class="card-image">
-        <img src="http://lorempixel.com/100/190/nature/6">
-      </div>
-      <div class="card-stacked">
-        <div class="card-content">
-          <p>I am a very simple card. I am good at containing small bits of information.</p>
-        </div>
-        <div class="card-action">
-          <a class="waves-effect waves-light btn" href="/add-visitor/">View visitor</a>
-        </div>
-      </div>
+<div class="col s12 m5">
+  <div class="card horizontal">
+    <div class="card-action">
+      <a href="/add-visitor/">Add a visitor</a>
     </div>
   </div>
+</div>
 
-  <div class="col s12 m5">
-    <div class="card horizontal">
-      <div class="card-image">
-        <img src="http://lorempixel.com/100/190/nature/6">
+{% if visitors %}
+{% for visitor in visitors %}
+<div class="col s12 m5">
+  <div class="card horizontal">
+    <div class="card-image">
+      <img src="http://lorempixel.com/100/190/nature/6">
+    </div>
+    <div class="card-stacked">
+      <div class="card-content">
+        <p>Visitor</p>
+        {{ visitor.name }}
+        {{ visitor.gender }}
+        {{ visitor.cancer_type }}
       </div>
-      <div class="card-stacked">
-        <div class="card-content">
-          <p>I am a very simple card. I am good at containing small bits of information.</p>
-        </div>
-        <div class="card-action">
-          <a href="#">This is a link</a>
-        </div>
+      <div class="card-action">
+        <a href="/add-visitor/">View visitor</a>
       </div>
     </div>
   </div>
+</div>
+{% endfor %}
+{% endif %}
+
+
 {% endblock %}
