@@ -31,7 +31,7 @@ class StaffMember(models.Model):
         ("FR", "Fundraiser"),
         ("SS", "Sessional Staff"),
     )
-    centre = models.ForeignKey(Centre, on_delete=models.CASCADE)
+    centre = models.ManyToManyField(Centre)
     user_mapping = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=80)
     surname = models.CharField(max_length=120)
@@ -165,6 +165,7 @@ class TempVisitNameMapping(models.Model):
     centre = models.ForeignKey(Centre, on_delete=models.CASCADE)
     visitor_name = models.CharField(max_length=100)
     related_visit = models.ForeignKey(Visit, on_delete=models.CASCADE)
+    isInBuilding = models.BooleanField(default=True)
 
     def __str__(self):
         return self.visitor_name

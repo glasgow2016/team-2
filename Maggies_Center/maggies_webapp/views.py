@@ -1,9 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user
 from .forms import BaseUserForm, NewStaffForm, VisitForm, TempVisitNameMappingForm
-from maggies_webapp.models import Visit, Activity, StaffMember
+from maggies_webapp.models import Visit, Activity, StaffMember, TempVisitNameMapping
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .stats import get_visitor_stats
@@ -11,7 +11,14 @@ from django.contrib import messages
 
 
 def main_page(request):
-    return render(request,'maggies/main.html')
+    values = []
+    for visitor in TempVisitNameMapping.objects.all():
+        values += [{
+        'name': visitor.visitor_name,
+        'gender': visitor.related_visit.gender,
+        'cancer_type': visitor.related_visit.cancer_site
+        }]
+    return render(request,'maggies/main.html', {'visitors': values})
 
 
 class AddUser(View, LoginRequiredMixin):
@@ -42,29 +49,52 @@ class AddUser(View, LoginRequiredMixin):
                                                          "form_b": form_b})
 
 
-@login_required
-def schedule(request):
-    context_dict = {}
-    current_user = get_user(request)
-    current_user = StaffMember.objects.get(user_mapping = get_user(request))
-    context_dict["schedule"] = {}
-    for activity in Activity.objects.filter(centre=current_user.centre):
-        for i in range(0,7,1):
-            print(activity.scheduled_times_array[i])
-            # context_dict["schedule"][day] = {}
-            # context_dict["schedule"][day][activity.id] = []
-            # for time in activity.scheduled_times_array[day]:
-            #     context_dict["schedule"][day][activity.id].append(time)
-    # Activity.objects.filter(centre="blah")
-    return render(request,'maggies/schedule.html',context_dict)
+class Schedule(View, LoginRequiredMixin):
+    def get(self,request):
+        context_dict = {}
+        current_user = get_user(request)
+        current_user = StaffMember.objects.get(user_mapping = get_user(request))
+        context_dict["schedule"] = {}
+        for activity in Activity.objects.filter(centre=current_user.centre):
+            for i in range(0,7,1):
+                context_dict["schedule"][i] = activity.scheduled_times_array[i]
+                # context_dict["schedule"][day] = {}
+                # context_dict["schedule"][day][activity.id] = []
+                # for time in activity.scheduled_times_array[day]:
+                #     context_dict["schedule"][day][activity.id].append(time)
+        # Activity.objects.filter(centre="blah")
+        return render(request,'maggies/schedule.html',context_dict)
+
+    def post(self,request):
+        data = request.POST
+        activities = data.getlist("activity")
+        number = len(activities)
+        activity_dict = {}
+        for i in range(0,number):
+            activity_dict[activities[i]] = {"times":[]}
+            activity_dict[activities[i]]["times"].append([data.getlist("start")[i],[data.getlist("end")[i]]])
+
+
+            # act = Activity()
+            # act.centre = StaffMember.objects.get(user_mapping = get_user(request)).centre
+            # staff = data.getlist("name")[i]
+            # if staff is not None:
+            #     act.instructed_by = StaffMember.objects.get(name=data.getlist("name"))[i]
+            # start = data.getlist("start")[i]
+            # if start is not None:
+            #     pass
+            # print(start)
+            # print(staff)
+        print(activity_dict)
+        return render(request,'maggies/schedule.html')
 
 
 class AddVisitor(View, LoginRequiredMixin):
 
     def get(self, request):
-        get_visitor_stats()
+        stats = get_visitor_stats()
         form_a = TempVisitNameMappingForm()
-        form_b = VisitForm(initial={"gender": Visit.GENDER_CHOICES[0][0]})
+        form_b = VisitForm(initial=stats,)
         return render(request, "maggies/new_visitor.html", {"form_a": form_a,
                                                             "form_b": form_b})
 
@@ -78,6 +108,7 @@ class AddVisitor(View, LoginRequiredMixin):
                 new_mapping.related_visit = new_visitor
                 new_visitor.save()
                 new_mapping.save()
+                return redirect("/")
             else:
                 messages.warning(request, "Invalid user information")
         else:

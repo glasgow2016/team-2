@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="{% static 'css/jquery-ui.structure.min.css' %}">
   <link rel="stylesheet" href="{% static 'css/jquery-ui.min.css' %}">
 {% endblock %}
+{% block header%}New Visitor{% endblock %}
 {% block content %}
 <script>
   var form_id = "{{ form_a.visitor_name.id_for_label }}";

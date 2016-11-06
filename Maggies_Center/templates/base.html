@@ -67,9 +67,12 @@
             </nav>
           </div>
 		  <div class="container">
-
+		  <h4 class="header">
+			{% block header %}{% endblock %}
+		  </h4>
           {% block content %}
           {% endblock %}
+		  
 		  </div>
 
             <footer class="page-footer white black-text">
