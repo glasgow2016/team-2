@@ -66,7 +66,26 @@ class Schedule(View, LoginRequiredMixin):
         return render(request,'maggies/schedule.html',context_dict)
 
     def post(self,request):
-        
+        data = request.POST
+        activities = data.getlist("activity")
+        number = len(activities)
+        activity_dict = {}
+        for i in range(0,number):
+            activity_dict[activities[i]] = {"times":[]}
+            activity_dict[activities[i]]["times"].append([data.getlist("start")[i],[data.getlist("end")[i]]])
+
+
+            # act = Activity()
+            # act.centre = StaffMember.objects.get(user_mapping = get_user(request)).centre
+            # staff = data.getlist("name")[i]
+            # if staff is not None:
+            #     act.instructed_by = StaffMember.objects.get(name=data.getlist("name"))[i]
+            # start = data.getlist("start")[i]
+            # if start is not None:
+            #     pass
+            # print(start)
+            # print(staff)
+        print(activity_dict)
         return render(request,'maggies/schedule.html')
 
 
