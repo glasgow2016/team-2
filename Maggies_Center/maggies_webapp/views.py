@@ -160,6 +160,7 @@ class AddVisitor(LoginRequiredMixin, View):
                 new_mapping = form_a.save(commit=False)
                 new_visitor = form_b.save()
                 new_mapping.related_visit = new_visitor
+                new_mapping.centre = new_visitor.visit_site
                 new_visitor.save()
                 new_mapping.save()
                 if this_id is not None:
