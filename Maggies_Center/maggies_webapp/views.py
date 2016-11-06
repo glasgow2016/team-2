@@ -64,7 +64,8 @@ class AddVisitor(View, LoginRequiredMixin):
         get_visitor_stats()
         form_a = TempVisitNameMappingForm()
         form_b = VisitForm(initial={"gender": Visit.GENDER_CHOICES[0][0]})
-        return render(request, "maggies/new_visitor.html", {"form_a": form_a, "form_b": form_b})
+        return render(request, "maggies/new_visitor.html", {"form_a": form_a,
+                                                            "form_b": form_b})
 
     def post(self, request):
         form_a = TempVisitNameMappingForm(request.POST)

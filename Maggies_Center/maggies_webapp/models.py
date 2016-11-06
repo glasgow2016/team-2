@@ -85,7 +85,11 @@ class Activity(models.Model):
             self.scheduled_times_array = [[] for x in range(7)]
 
     def __str__(self):
-        return str(self.name)
+        found_name = ActivityName.objects.filter(activity=self)
+        if len(found_name) == 0:
+            return ""
+        else:
+            return str(found_name[0].translated_name)
 
 
 class ActivityName(models.Model):
