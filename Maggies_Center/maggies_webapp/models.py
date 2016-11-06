@@ -6,6 +6,22 @@ from django.contrib.auth.models import User
 import json
 
 
+class Language(models.Model):
+    name = models.CharField(max_length=40)
+    name_in_english = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.name_in_english
+
+
+class Centre(models.Model):
+    name = models.CharField(max_length=100)
+    language = models.ForeignKey(Language, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return self.language.name_in_english
+
+
 class StaffMember(models.Model):
     STAFF_TYPE_CHOICES = (
         ("CH", "Centre Head"),
@@ -23,22 +39,6 @@ class StaffMember(models.Model):
 
     def __str__(self):
         return self.name
-
-
-class Language(models.Model):
-    name = models.CharField(max_length=40)
-    name_in_english = models.CharField(max_length=30)
-
-    def __str__(self):
-        return self.name_in_english
-
-
-class Centre(models.Model):
-    name = models.CharField(max_length=100)
-    language = models.ForeignKey(Language, on_delete=models.PROTECT)
-
-    def __str__(self):
-        return self.language.name_in_english
 
 
 class Activity(models.Model):
@@ -159,7 +159,7 @@ class Visit(models.Model):
 
 class TempVisitNameMapping(models.Model):
     visitor_name = models.CharField(max_length=100)
-    related_visitor = models.ForeignKey(Visit, on_delete=models.CASCADE)
+    related_visit = models.ForeignKey(Visit, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.visitor_name
