@@ -2,8 +2,7 @@ from django.shortcuts import render
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user
-from .forms import BaseUserForm, NewStaffForm, VisitForm, \
-    TempVisitNameMappingForm
+from .forms import BaseUserForm, NewStaffForm, VisitForm, TempVisitNameMappingForm
 from maggies_webapp.models import Visit, Activity, StaffMember
 from django.http import HttpResponseNotFound
 from django.contrib.auth.decorators import login_required
@@ -47,6 +46,10 @@ class AddUser(View, LoginRequiredMixin):
 @login_required
 def schedule(request):
     context_dict = {}
+    current_user = get_user(request)
+    if (current_user.id == None):
+        # return HttpResponseNotFound('<p>Page not Found</p>')
+        return render(request, 'maggies/schedule.html', context_dict)
     current_user = StaffMember.objects.get(user_mapping = get_user(request))
     context_dict["schedule"] = {}
     for activity in Activity.objects.filter(centre=current_user.centre):
@@ -62,10 +65,10 @@ def schedule(request):
 class AddVisitor(View, LoginRequiredMixin):
 
     def get(self, request):
+        get_visitor_stats()
         form_a = TempVisitNameMappingForm()
-        form_b = VisitForm()
-        return render(request, "maggies/new_visitor.html", {"form_a": form_a,
-                                                            "form_b": form_b})
+        form_b = VisitForm(initial={"gender": Visit.GENDER_CHOICES[0][0]})
+        return render(request, "maggies/new_visitor.html", {"form_a": form_a, "form_b": form_b})
 
     def post(self, request):
         form_a = TempVisitNameMappingForm(request.POST)
