@@ -2,8 +2,9 @@ from django.shortcuts import render
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user
-from .forms import BaseUserForm, NewStaffForm, VisitForm, TempVisitNameMappingForm
-from maggies_webapp.models import Visit, Activity, StaffMember
+from .forms import BaseUserForm, NewStaffForm, VisitForm, \
+    TempVisitNameMappingForm
+from maggies_webapp.models import Visitor, Activity, StaffMember
 from django.http import HttpResponseNotFound
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -63,7 +64,8 @@ class AddVisitor(View, LoginRequiredMixin):
     def get(self, request):
         form_a = TempVisitNameMappingForm()
         form_b = VisitForm()
-        return render(request, "maggies/new_visitor.html", {"form_a": form_a, "form_b": form_b})
+        return render(request, "maggies/new_visitor.html", {"form_a": form_a,
+                                                            "form_b": form_b})
 
     def post(self, request):
         form_a = TempVisitNameMappingForm(request.POST)
@@ -79,7 +81,8 @@ class AddVisitor(View, LoginRequiredMixin):
                 messages.warning(request, "Invalid user information")
         else:
             messages.warning(request, "Invalid visitor information")
-        return render(request, "maggies/new_visitor.html", {"form_a": form_a, "form_b": form_b})
+        return render(request, "maggies/new_visitor.html", {"form_a": form_a,
+                                                            "form_b": form_b})
 
 
 class Export(View, LoginRequiredMixin):
@@ -87,5 +90,5 @@ class Export(View, LoginRequiredMixin):
     def get(self, request):
         print("Received export request")
         print(request.GET.get('startdate'), request.GET.get('enddate'))
-        visits = Visit.objects.all()
+        visits = Visitor.objects.all()
         print(visits)

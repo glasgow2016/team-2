@@ -15,7 +15,7 @@ class StaffMember(models.Model):
         ("FR", "Fundraiser"),
         ("SS", "Sessional Staff"),
     )
-
+    centre = models.ForeignKey(Centre, on_delete=models.CASCADE)
     user_mapping = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=80)
     surname = models.CharField(max_length=120)
@@ -41,16 +41,7 @@ class Centre(models.Model):
         return self.language.name_in_english
 
 
-class ActivityName(models.Model):
-    lang = models.ForeignKey(Language, on_delete=models.CASCADE)
-    translated_name = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.translated_name
-
-
 class Activity(models.Model):
-    name = models.ForeignKey(ActivityName, on_delete=models.CASCADE)
     centre = models.ForeignKey(Centre, on_delete=models.CASCADE)
     instructed_by = models.ManyToManyField(StaffMember)
     scheduled_times_json = models.CharField(max_length=2000)
@@ -95,9 +86,18 @@ class Activity(models.Model):
 
     def __str__(self):
         return str(self.name)
-        
 
-class Visit(models.Model):
+
+class ActivityName(models.Model):
+    activity = models.ForeignKey(Activity, on_delete=models.CASCADE)
+    lang = models.ForeignKey(Language, on_delete=models.CASCADE)
+    translated_name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.translated_name
+
+
+class Visitor(models.Model):
     GENDER_CHOICES = (
         ("MA", "Male"),
         ("FE", "Female"),
@@ -154,12 +154,12 @@ class Visit(models.Model):
     seen_by = models.ForeignKey(StaffMember, on_delete=models.SET_NULL,
                                 null=True)
     type = models.CharField(max_length=2, choices=VISIT_TYPE_CHOICES)
-    activities = models.ManyToManyField(Activity)
+    activities = models.ManyToManyField(Activity, blank=True)
 
 
 class TempVisitNameMapping(models.Model):
     visitor_name = models.CharField(max_length=100)
-    related_visit = models.ForeignKey(Visit, on_delete=models.CASCADE)
+    related_visitor = models.ForeignKey(Visitor, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.visitor_name
