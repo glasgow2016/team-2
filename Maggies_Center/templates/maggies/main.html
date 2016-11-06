@@ -9,31 +9,15 @@
 {% endblock %}
 {% block content%}
 
-<div class="col s12 m5">
-  <div class="card horizontal">
-    <div class="card-action">
-      <a href="/add-visitor/">Add a visitor</a>
-    </div>
-  </div>
-</div>
+
 
 <div class="row">
-<div class="card btn" id="" onclick="addVisitorCard()">+</div>
-  <div class="col s12 m4">
-    <div class="card grey">
-      <div class="card-content white-text">
-        <span class="card-title">Title (name?)</span>
-        <p>Cool info goes here! Wow!</p>
-      </div>
-      <div class="card-action">
-        <a href="#">Save</a>
-      </div>
-    </div>
-  </div>
+<a class="card btn col s12 m3 red darken-4 waves-light waves-effect" style="height: 190px; font-size: 190px; padding-top: 75px;" id="" onclick="addVisitorCard()">+</a>
+
 
 {% if visitors %}
 	{% for visitor in visitors %}
-	<div class="col s12 m5">
+	<div class="col s12 m3">
 	  <div class="card horizontal">
 		<div class="card-image">
 		  <img src="http://lorempixel.com/100/190/nature/6">
@@ -53,6 +37,7 @@
 	</div>
 	{% endfor %}
 {% endif %}
+
 </div>
 
 {% endblock %}
