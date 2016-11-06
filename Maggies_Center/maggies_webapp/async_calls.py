@@ -5,12 +5,13 @@ from .models import TempVisitNameMapping
 import difflib
 
 
-def get_suggestion(request, partial):
+def get_suggestion(request, partial, centre_id):
     temp_results = TempVisitNameMapping.objects.filter(
-        visitor_name__icontains=partial)
+        visitor_name__icontains=partial, centre__pk=centre_id)
     if len(temp_results) == 0:
         temp_results = []
-        for visitor in TempVisitNameMapping.objects.all():
+        for visitor in TempVisitNameMapping.objects.filter(
+                centre__pk=centre_id):
             if difflib.SequenceMatcher(None, visitor.visitor_name.lower(),
                                              partial.lower()).ratio() >= 0.78:
                 temp_results += [{"name": visitor.visitor_name,

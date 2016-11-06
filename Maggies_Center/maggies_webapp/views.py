@@ -14,9 +14,9 @@ def main_page(request):
     values = []
     for visitor in TempVisitNameMapping.objects.all():
         values += [{
-        'name': visitor.visitor_name,
-        'gender': visitor.related_visit.gender,
-        'cancer_type': visitor.related_visit.cancer_site
+            'name': visitor.visitor_name,
+            'gender': visitor.related_visit.get_gender_display(),
+            'cancer_type': visitor.related_visit.get_cancer_site_display()
         }]
     return render(request,'maggies/main.html', {'visitors': values})
 
