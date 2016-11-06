@@ -56,39 +56,31 @@ class Schedule(View, LoginRequiredMixin):
         context_dict = {}
         current_user = get_user(request)
         current_user = StaffMember.objects.get(user_mapping = get_user(request))
-        context_dict["schedule"] = {}
-        for activity in Activity.objects.filter(centre=current_user.centre):
-            for i in range(0,7,1):
-                context_dict["schedule"][i] = activity.scheduled_times_array[i]
-                # context_dict["schedule"][day] = {}
-                # context_dict["schedule"][day][activity.id] = []
-                # for time in activity.scheduled_times_array[day]:
-                #     context_dict["schedule"][day][activity.id].append(time)
-        # Activity.objects.filter(centre="blah")
+        context_dict["centres"] = current_user.centre.all()
         return render(request,'maggies/schedule.html',context_dict)
 
-    def post(self,request):
+    def post(self, request):
         data = request.POST
         activities = data.getlist("activity")
         number = len(activities)
         activity_dict = {}
-        for i in range(0,number):
-            activity_dict[activities[i]] = {"times":[]}
-            activity_dict[activities[i]]["times"].append([data.getlist("start")[i],[data.getlist("end")[i]]])
+        for i in range(0, number):
+            if (activities[i] not in activity_dict):
+                activity_dict[activities[i]] = {"times": [], "staff": []}
+            activity_dict[activities[i]]["times"].append([data.getlist("start")[i], data.getlist("end")[i]])
+            activity_dict[activities[i]]["staff"].append(data.getlist("staff")[i])
 
-
-            # act = Activity()
-            # act.centre = StaffMember.objects.get(user_mapping = get_user(request)).centre
-            # staff = data.getlist("name")[i]
-            # if staff is not None:
-            #     act.instructed_by = StaffMember.objects.get(name=data.getlist("name"))[i]
-            # start = data.getlist("start")[i]
-            # if start is not None:
-            #     pass
-            # print(start)
-            # print(staff)
-        print(activity_dict)
-        return render(request,'maggies/schedule.html')
+        for key in activity_dict:
+            act = Activity()
+            act.centre = Centre.objects.get(name=data.get("centre"))
+            act.set_scheduled_times(int(data.get("day")), activity_dict[key]["times"])
+            print (data.get("day"))
+            print (act.centre)
+            act.save()
+            for staff_member in activity_dict[key]["staff"]:
+                act.instructed_by.add(StaffMember.objects.get(name=staff_member))
+            act.save()
+        return render(request, 'maggies/schedule.html')
 
 
 class AddVisitor(View, LoginRequiredMixin):
