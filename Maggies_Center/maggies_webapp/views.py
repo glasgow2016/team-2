@@ -59,9 +59,8 @@ class Schedule(View, LoginRequiredMixin):
         return render(request,'maggies/schedule.html',context_dict)
 
     def post(self,request):
-
-        print(request.POST)
-        return
+        
+        return render(request,'maggies/schedule.html')
 
 
 class AddVisitor(View, LoginRequiredMixin):

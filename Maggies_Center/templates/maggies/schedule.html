@@ -4,17 +4,19 @@
 
 
     <div class="row">
-        <form class="col s12" action="">
+
+        <form class="col s12" method="post">
+            {% csrf_token %}
             <div class="row">
 
-                <button class="btn waves-effect waves-light"  type="submit" value="Submit">Save
+                <button class="btn waves-effect waves-light" type="submit" value="Submit">Save
                     <i class="material-icons right">save</i>
                 </button>
             </div>
 
             <div class="row">
                 <div class="col s6"><label>Day</label>
-                    <select title="day">
+                    <select name="day" title="day">
                         <option value="0">Monday</option>
                         <option value="1">Tuesday</option>
                         <option value="2">Wednesday</option>
@@ -32,21 +34,16 @@
                     </select>
                 </div>
                 <div class="input-field col s2">
-                    <select class="browser-default" title="start">
-                        <option value="a">A</option>
-                    </select>
+                    <input type="time" name="start" title="start">
                 </div>
-                <div id="last-end-time" class="input-field col s2">
-                    <select class="browser-default" title="end">
-                        <option value="a">A</option>
-                    </select>
+                <div class="input-field col s2">
+                    <input type="time" name="end" title="end">
                 </div>
                 <div class="input-field col s3">
                     <input title="staff-id">
                 </div>
 
-                <a id="add-row" class="btn"><i
-                        class="material-icons left">add</i>ADD</a>
+                <a id="add-row" class="btn"><i class="material-icons left">add</i>ADD</a>
 
             </div>
 
