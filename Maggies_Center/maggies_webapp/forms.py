@@ -1,5 +1,5 @@
 from django import forms
-from .models import StaffMember, Visit, TempVisitNameMapping
+from .models import StaffMember, Visit, TempVisitNameMapping, Centre
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
@@ -35,3 +35,10 @@ class TempVisitNameMappingForm(forms.ModelForm):
     class Meta:
         model = TempVisitNameMapping
         exclude = ("related_visit",)
+
+
+class ExportForm(forms.Form):
+    startdate = forms.DateField(widget=forms.DateInput(attrs={'class':'datepicker'}))
+    enddate = forms.DateField(widget=forms.DateInput(attrs={'class':'datepicker'}))
+    center = forms.ModelChoiceField(queryset=Centre.objects)
+

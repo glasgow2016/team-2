@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Export{% endblock %}
+{% block header %}Export Visitor Data{% endblock %}
+{% block content %}
+
+<form method="post">
+    {% csrf_token %}
+        <p>
+			{{ form.startdate.label_tag }}
+            <input type="date" name="startdate" class="datepicker"/>
+			{{ form.startdate.errors }}
+		</p>
+		<p>
+			{{ form.enddate.label_tag }}
+            <input type="date" name="enddate" class="datepicker"/>
+			{{ form.enddate.errors }}
+		</p>
+		<p>
+			{{ form.center.label_tag }}
+			{{ form.center }}
+			{{ form.center.errors }}
+		</p>
+    <input type="submit" value="Export as CSV" class="btn waves-effect waves-light right">
+</form>
+
+{% endblock %}

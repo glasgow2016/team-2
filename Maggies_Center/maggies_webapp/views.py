@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user
-from .forms import BaseUserForm, NewStaffForm, VisitForm, TempVisitNameMappingForm
+from .forms import BaseUserForm, NewStaffForm, VisitForm, TempVisitNameMappingForm, ExportForm
 from maggies_webapp.models import Visit, Activity, StaffMember, TempVisitNameMapping, Centre
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -114,7 +114,16 @@ class AddVisitor(LoginRequiredMixin, View):
 class Export(LoginRequiredMixin, View):
 
     def get(self, request):
-        print("Received export request")
-        print(request.GET.get('startdate'), request.GET.get('enddate'))
         visits = Visit.objects.all()
         print(visits)
+        form = ExportForm()
+        return render(request, "maggies/export.html", {"form": form})
+
+    def post(self, request):
+        form = ExportForm(request.POST)
+        if form.is_valid():
+            print(form.center)
+            print(form.startdate)
+        else:
+            print("Export failed to retrieve input")
+        return render(request, "maggies/export.html", {"form": form})
