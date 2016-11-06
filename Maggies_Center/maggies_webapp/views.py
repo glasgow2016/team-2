@@ -1,9 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user
 from .forms import BaseUserForm, NewStaffForm, VisitForm, TempVisitNameMappingForm
-from maggies_webapp.models import Visit, Activity, StaffMember
+from maggies_webapp.models import Visit, Activity, StaffMember, TempVisitNameMapping
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .stats import get_visitor_stats
@@ -11,7 +11,14 @@ from django.contrib import messages
 
 
 def main_page(request):
-    return render(request,'maggies/main.html')
+    values = []
+    for visitor in TempVisitNameMapping.objects.all():
+        values += [{
+        'name': visitor.visitor_name,
+        'gender': visitor.related_visit.gender,
+        'cancer_type': visitor.related_visit.cancer_site
+        }]
+    return render(request,'maggies/main.html', {'visitors': values})
 
 
 class AddUser(View, LoginRequiredMixin):
@@ -66,9 +73,9 @@ class Schedule(View, LoginRequiredMixin):
 class AddVisitor(View, LoginRequiredMixin):
 
     def get(self, request):
-        get_visitor_stats()
+        stats = get_visitor_stats()
         form_a = TempVisitNameMappingForm()
-        form_b = VisitForm(initial={"gender": Visit.GENDER_CHOICES[0][0]})
+        form_b = VisitForm(initial=stats)
         return render(request, "maggies/new_visitor.html", {"form_a": form_a,
                                                             "form_b": form_b})
 
@@ -82,6 +89,7 @@ class AddVisitor(View, LoginRequiredMixin):
                 new_mapping.related_visit = new_visitor
                 new_visitor.save()
                 new_mapping.save()
+                return redirect("/")
             else:
                 messages.warning(request, "Invalid user information")
         else:
