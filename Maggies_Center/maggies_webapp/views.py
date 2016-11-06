@@ -23,7 +23,7 @@ def main_page(request):
             'gender': visitor.related_visit.gender,
             'cancer_type': visitor.related_visit.cancer_site
             }]
-    return render(request,'maggies/main.html', {'visitors': values})
+    return render(request,'maggies/main.html', {'staffmember': staff_member, 'visitors': values})
 
 
 class AddUser(View, LoginRequiredMixin):
