@@ -19,7 +19,7 @@ class Centre(models.Model):
     language = models.ForeignKey(Language, on_delete=models.PROTECT)
 
     def __str__(self):
-        return self.language.name_in_english
+        return self.name
 
 
 class StaffMember(models.Model):
