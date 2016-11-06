@@ -35,3 +35,11 @@ class TempVisitNameMappingForm(forms.ModelForm):
     class Meta:
         model = TempVisitNameMapping
         fields = ("visitor_name",)
+
+
+class ExportForm(forms.Form):
+    startdate = forms.DateField(widget=forms.DateInput(attrs={'class':'datepicker'}))
+    enddate = forms.DateField(widget=forms.DateInput(attrs={'class':'datepicker'}))
+    center = forms.ModelChoiceField(queryset=Centre.objects)
+
+
