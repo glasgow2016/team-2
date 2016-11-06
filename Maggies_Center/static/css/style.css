@@ -42,4 +42,8 @@
 	.card .card-action {
 		padding: 15px;
 	}
+	.card-image > img {
+		max-height: 128px;
+		padding: 15px;
+	}
 	
