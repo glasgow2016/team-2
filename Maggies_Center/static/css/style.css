@@ -4,7 +4,9 @@
     min-height: 100vh;
     flex-direction: column;
   }
-
+#sidenav-overlay {
+z-index: 1;
+}
   main {
     flex: 1 0 auto;
   }
@@ -15,7 +17,9 @@
 	nav ul li a{
 		color: black;
 	}
-	
+	nav a {
+		color: black;
+	}
 	nav .brand-logo img{
 		margin: 22px 0 0 0;
 		max-height: 35px;
