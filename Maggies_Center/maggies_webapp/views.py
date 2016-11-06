@@ -3,21 +3,26 @@ from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user
 from .forms import BaseUserForm, NewStaffForm, VisitForm, TempVisitNameMappingForm
-from maggies_webapp.models import Visit, Activity, StaffMember, TempVisitNameMapping
+from maggies_webapp.models import Visit, Activity, StaffMember, TempVisitNameMapping, Centre
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .stats import get_visitor_stats
 from django.contrib import messages
 
-
+@login_required
 def main_page(request):
+    if request.user is None:
+        return redirect('/accounts/login/')
+    staff_member = StaffMember.objects.all().get(user_mapping=request.user)
+    centers = Centre.objects.filter(staffmember=staff_member)
     values = []
     for visitor in TempVisitNameMapping.objects.all():
-        values += [{
-        'name': visitor.visitor_name,
-        'gender': visitor.related_visit.gender,
-        'cancer_type': visitor.related_visit.cancer_site
-        }]
+        if (visitor.related_visit.visit_site in centers):
+            values += [{
+            'name': visitor.visitor_name,
+            'gender': visitor.related_visit.gender,
+            'cancer_type': visitor.related_visit.cancer_site
+            }]
     return render(request,'maggies/main.html', {'visitors': values})
 
 
