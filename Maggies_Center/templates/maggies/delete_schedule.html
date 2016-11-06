@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <form type="post">
+        {% for a in activities %}
+
+
+            <p>
+                <input type="checkbox" class="filled-in" id="filled-in-box" checked="checked"/>
+                <label for="filled-in-box">{{ a }}</label>
+            </p>
+
+
+        {% endfor %}
+        <button class="btn waves-effect waves-light red" type="submit" value="Submit">Delete Selected
+            <i class="material-icons right">delete</i>
+        </button>
+    </form>
+{% endblock %}
