@@ -25,4 +25,4 @@ def get_suggestion(request, partial, centre_id):
 
 @login_required
 def visitor_left(request, visitor_id):
-    obj = get_
+    pass
