@@ -160,3 +160,6 @@ class Visit(models.Model):
 class TempVisitNameMapping(models.Model):
     visitor_name = models.CharField(max_length=100)
     related_visit = models.ForeignKey(Visit, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.visitor_name
