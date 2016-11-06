@@ -42,21 +42,26 @@ class AddUser(View, LoginRequiredMixin):
                                                          "form_b": form_b})
 
 
-@login_required
-def schedule(request):
-    context_dict = {}
-    current_user = get_user(request)
-    current_user = StaffMember.objects.get(user_mapping = get_user(request))
-    context_dict["schedule"] = {}
-    for activity in Activity.objects.filter(centre=current_user.centre):
-        for i in range(0,7,1):
-            print(activity.scheduled_times_array[i])
-            # context_dict["schedule"][day] = {}
-            # context_dict["schedule"][day][activity.id] = []
-            # for time in activity.scheduled_times_array[day]:
-            #     context_dict["schedule"][day][activity.id].append(time)
-    # Activity.objects.filter(centre="blah")
-    return render(request,'maggies/schedule.html',context_dict)
+class Schedule(View, LoginRequiredMixin):
+    def get(self,request):
+        context_dict = {}
+        current_user = get_user(request)
+        current_user = StaffMember.objects.get(user_mapping = get_user(request))
+        context_dict["schedule"] = {}
+        for activity in Activity.objects.filter(centre=current_user.centre):
+            for i in range(0,7,1):
+                context_dict["schedule"][i] = activity.scheduled_times_array[i]
+                # context_dict["schedule"][day] = {}
+                # context_dict["schedule"][day][activity.id] = []
+                # for time in activity.scheduled_times_array[day]:
+                #     context_dict["schedule"][day][activity.id].append(time)
+        # Activity.objects.filter(centre="blah")
+        return render(request,'maggies/schedule.html',context_dict)
+
+    def post(self,request):
+
+        print(request.POST)
+        return
 
 
 class AddVisitor(View, LoginRequiredMixin):
