@@ -4,6 +4,7 @@ from maggies_webapp.models import Centre, StaffMember, Activity, ActivityName
 class Util(object):
     @staticmethod
     def generate_dict_from_instance(visitor):
+
          return {
                 'name': visitor.visitor_name,
                 'gender': visitor.related_visit.get_gender_display(),
@@ -32,6 +33,4 @@ class Util(object):
 
     @staticmethod
     def get_activity_name_in_user_lang(user, activity):
-        return ActivityName.filter(activity=activity,
-                                   lang=Util.get_user_lang(user)).\
-            translated_name
+        return ActivityName.objects.all().filter(activity=activity, lang=Util.get_user_lang(user)).translated_name
